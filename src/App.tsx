@@ -5,13 +5,9 @@ import { PlayerProvider, usePlayer } from "./state/PlayerContext";
 import { EducationProvider } from "./state/EducationContext";
 import { JobsProvider } from "./state/JobsContext";
 import { ArenaProvider } from "./state/ArenaContext";
+import { AcademyRuntimeProvider } from "./state/AcademyRuntimeContext";
 import Ciel from "./components/ciel/Ciel";
 
-/**
- * Redirects to /register if:
- *  1. No auth session (not logged in), OR
- *  2. Logged in but player hasn't registered a character yet
- */
 function AuthGate({ children }: { children: React.ReactNode }) {
   const { isLoggedIn } = useAuth();
   const { isRegistered } = usePlayer();
@@ -30,18 +26,20 @@ export default function App() {
   return (
     <AuthProvider>
       <PlayerProvider>
-        <JobsProvider>
-          <ArenaProvider>
-            <EducationProvider>
-              <BrowserRouter>
-                <AuthGate>
-                  <AppRouter />
-                  <Ciel />
-                </AuthGate>
-              </BrowserRouter>
-            </EducationProvider>
-          </ArenaProvider>
-        </JobsProvider>
+        <AcademyRuntimeProvider>
+          <JobsProvider>
+            <ArenaProvider>
+              <EducationProvider>
+                <BrowserRouter>
+                  <AuthGate>
+                    <AppRouter />
+                    <Ciel />
+                  </AuthGate>
+                </BrowserRouter>
+              </EducationProvider>
+            </ArenaProvider>
+          </JobsProvider>
+        </AcademyRuntimeProvider>
       </PlayerProvider>
     </AuthProvider>
   );
