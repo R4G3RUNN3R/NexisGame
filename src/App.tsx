@@ -5,6 +5,7 @@ import { PlayerProvider, usePlayer } from "./state/PlayerContext";
 import { EducationProvider } from "./state/EducationContext";
 import { EducationRuntimeProvider } from "./state/EducationRuntimeContext";
 import { TravelRuntimeProvider } from "./state/TravelRuntimeContext";
+import { MarketRuntimeProvider } from "./state/MarketRuntimeContext";
 import { JobsProvider } from "./state/JobsContext";
 import { ArenaProvider } from "./state/ArenaContext";
 import { AcademyRuntimeProvider } from "./state/AcademyRuntimeContext";
@@ -31,18 +32,20 @@ export default function App() {
         <AcademyRuntimeProvider>
           <EducationRuntimeProvider>
             <TravelRuntimeProvider>
-              <JobsProvider>
-                <ArenaProvider>
-                  <EducationProvider>
-                    <BrowserRouter>
-                      <AuthGate>
-                        <AppRouter />
-                        <Ciel />
-                      </AuthGate>
-                    </BrowserRouter>
-                  </EducationProvider>
-                </ArenaProvider>
-              </JobsProvider>
+              <MarketRuntimeProvider>
+                <JobsProvider>
+                  <ArenaProvider>
+                    <EducationProvider>
+                      <BrowserRouter>
+                        <AuthGate>
+                          <AppRouter />
+                          <Ciel />
+                        </AuthGate>
+                      </BrowserRouter>
+                    </EducationProvider>
+                  </ArenaProvider>
+                </JobsProvider>
+              </MarketRuntimeProvider>
             </TravelRuntimeProvider>
           </EducationRuntimeProvider>
         </AcademyRuntimeProvider>
