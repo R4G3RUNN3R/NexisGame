@@ -1,0 +1,128 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Inventory Page Styles
+───────────────────────────────────────────────────────────────────────────── */
+
+.inv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.inv-item {
+  background: #0d1417;
+  border: 1px solid #1e2a34;
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.inv-item:hover {
+  border-color: #2a3f50;
+}
+
+.inv-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.inv-item__name {
+  font-size: 12px;
+  font-weight: 700;
+  color: #dde8f0;
+}
+
+.inv-item__category {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  flex-shrink: 0;
+}
+
+.inv-item__desc {
+  font-size: 11px;
+  color: #6a7f8e;
+  line-height: 1.4;
+}
+
+.inv-item__qty {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 4px;
+  font-size: 11px;
+  border-top: 1px solid #1a242e;
+  padding-top: 4px;
+}
+
+.inv-item__qty-label {
+  color: #546e7a;
+}
+
+.inv-item__qty-value {
+  color: #a8d8a8;
+  font-weight: 700;
+}
+
+/* Empty state */
+.inv-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #546e7a;
+}
+
+.inv-empty__icon {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.inv-empty__title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #7a909e;
+  margin-bottom: 6px;
+}
+
+.inv-empty__sub {
+  font-size: 12px;
+  line-height: 1.5;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+/* Category summary */
+.inv-categories {
+  margin-top: 12px;
+}
+
+.inv-categories__title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #546e7a;
+  margin-bottom: 6px;
+}
+
+.inv-cat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  line-height: 1.8;
+}
+
+.inv-cat-row__label {
+  font-weight: 600;
+}
+
+.inv-cat-row__count {
+  color: #c8d8e4;
+  font-weight: 600;
+}
+
+.inv-cat-row--empty {
+  color: #3a4f5e;
+  font-style: italic;
+}

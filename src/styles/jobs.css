@@ -1,0 +1,637 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Jobs Page CSS
+   Dark UI matching nexis-theme.css / education-ui.css
+   theme. All class names are prefixed with "jobs-" to avoid collisions.
+───────────────────────────────────────────────────────────────────────────── */
+
+/* ── Page wrapper ─────────────────────────────────────────────────────────── */
+
+.jobs-page {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 10px;
+}
+
+.jobs-body {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+/* ── Category list (left panel) ───────────────────────────────────────────── */
+
+.jobs-categories {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jobs-category-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+  color: #dde5ef;
+  text-align: left;
+  cursor: pointer;
+  position: relative;
+  border-left: 3px solid transparent;
+  transition: background 0.1s;
+}
+
+.jobs-category-card:hover {
+  background: #111820;
+}
+
+.jobs-category-card--active {
+  border-color: #3d5a34;
+  border-left-color: #78a94f;
+  background: linear-gradient(90deg, #172017 0%, #111710 100%);
+}
+
+.jobs-category-card__icon {
+  font-size: 20px;
+  line-height: 1;
+  flex-shrink: 0;
+  width: 28px;
+  text-align: center;
+}
+
+.jobs-category-card__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.jobs-category-card__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f0f5fb;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jobs-category-card__theme {
+  margin-top: 2px;
+  font-size: 11px;
+  color: #7a9b82;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.jobs-category-card__meta {
+  font-size: 11px;
+  color: #6a7d8e;
+  margin-top: 3px;
+}
+
+.jobs-category-card__badge {
+  font-size: 13px;
+  flex-shrink: 0;
+}
+
+/* ── Main panel ───────────────────────────────────────────────────────────── */
+
+.jobs-main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.jobs-category-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid #2a3740;
+  background: linear-gradient(180deg, #1a2026 0%, #151b21 100%);
+}
+
+.jobs-category-header__icon {
+  font-size: 22px;
+  line-height: 1;
+}
+
+.jobs-category-header__info {
+  flex: 1;
+}
+
+.jobs-category-header__name {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f0f6fe;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.jobs-category-header__desc {
+  margin-top: 3px;
+  font-size: 12px;
+  color: #95a3b3;
+  line-height: 1.45;
+}
+
+.jobs-category-header__illegal-tag {
+  padding: 3px 8px;
+  border: 1px solid #5c3030;
+  background: #1f0c0c;
+  color: #e88080;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  flex-shrink: 0;
+}
+
+/* ── Sub-job list ─────────────────────────────────────────────────────────── */
+
+.jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* ── Sub-job card ─────────────────────────────────────────────────────────── */
+
+.jobs-subjob-card {
+  border: 1px solid #26303a;
+  background: linear-gradient(180deg, #0f1418 0%, #0c1014 100%);
+  overflow: visible;
+}
+
+.jobs-subjob-card--attempting {
+  border-color: #3d5a34;
+}
+
+.jobs-subjob-card__top {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  align-items: start;
+  padding: 10px 12px;
+  border-bottom: 1px solid #1c242c;
+}
+
+.jobs-subjob-card__info {
+  min-width: 0;
+}
+
+.jobs-subjob-card__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #eef3fb;
+}
+
+.jobs-subjob-card__desc {
+  margin-top: 4px;
+  font-size: 12px;
+  color: #8a9bac;
+  line-height: 1.5;
+}
+
+.jobs-subjob-card__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+/* Level badge + XP bar */
+
+.jobs-level-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
+}
+
+.jobs-level-badge__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #d4e8b5;
+  background: #1e2e14;
+  border: 1px solid #3d5a34;
+  padding: 2px 8px;
+}
+
+.jobs-level-badge__xp-bar {
+  width: 80px;
+  height: 5px;
+  background: #1a2228;
+  border: 1px solid #263030;
+}
+
+.jobs-level-badge__xp-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #57b34d 0%, #8ed96c 100%);
+  transition: width 0.3s ease;
+}
+
+.jobs-level-badge__xp-text {
+  font-size: 10px;
+  color: #6b8a70;
+  text-align: right;
+}
+
+/* Attempt button */
+
+.jobs-attempt-btn {
+  min-width: 90px;
+  padding: 7px 14px;
+  border: 1px solid #405a2e;
+  background: linear-gradient(180deg, #253b1e 0%, #1b2c15 100%);
+  color: #c5e8a5;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  transition: background 0.1s;
+}
+
+.jobs-attempt-btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #2e4a25 0%, #21361b 100%);
+}
+
+.jobs-attempt-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.jobs-attempt-btn--on-cooldown {
+  border-color: #5a4b20;
+  background: linear-gradient(180deg, #2a2410 0%, #1f1b0c 100%);
+  color: #d4b860;
+}
+
+/* Stats row */
+
+.jobs-subjob-card__stats {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 7px 12px;
+  flex-wrap: wrap;
+}
+
+.jobs-stat-chip {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: #9ab5c4;
+}
+
+.jobs-stat-chip__label {
+  color: #6a7d8e;
+}
+
+.jobs-stat-chip--energy {
+  color: #7ec8e3;
+}
+
+.jobs-stat-chip--success {
+  color: #8ed96c;
+}
+
+.jobs-stat-chip--gold {
+  color: #d4b860;
+}
+
+.jobs-stat-chip--drops {
+  color: #b07ed4;
+}
+
+.jobs-stat-chip--cooldown {
+  color: #d4a060;
+}
+
+/* Cooldown indicator */
+
+.jobs-cooldown-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border: 1px solid #4a3b18;
+  background: #1e1908;
+  color: #d4b860;
+}
+
+.jobs-cooldown-badge--ready {
+  border-color: #2e5a2a;
+  background: #0f1e0d;
+  color: #78d45a;
+}
+
+/* ── Outcome result panel ─────────────────────────────────────────────────── */
+
+.jobs-outcome {
+  margin-top: 2px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+  animation: jobs-outcome-in 0.2s ease;
+}
+
+@keyframes jobs-outcome-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.jobs-outcome--success {
+  border-color: #3d5a34;
+  background: linear-gradient(180deg, #0f1f0d 0%, #0c1509 100%);
+}
+
+.jobs-outcome--fail {
+  border-color: #5a4b20;
+  background: linear-gradient(180deg, #1a160a 0%, #131108 100%);
+}
+
+.jobs-outcome--crit {
+  border-color: #5c2020;
+  background: linear-gradient(180deg, #1f0d0d 0%, #160808 100%);
+}
+
+.jobs-outcome__header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-bottom: 1px solid #1c242c;
+}
+
+.jobs-outcome--success .jobs-outcome__header { border-bottom-color: #2e4a28; }
+.jobs-outcome--fail    .jobs-outcome__header { border-bottom-color: #3a3018; }
+.jobs-outcome--crit    .jobs-outcome__header { border-bottom-color: #3d1818; }
+
+.jobs-outcome__title {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.jobs-outcome--success .jobs-outcome__title { color: #8ed96c; }
+.jobs-outcome--fail    .jobs-outcome__title { color: #d4b860; }
+.jobs-outcome--crit    .jobs-outcome__title { color: #e87070; }
+
+.jobs-outcome__flavor {
+  font-size: 12px;
+  color: #8a9bac;
+  flex: 1;
+  font-style: italic;
+}
+
+.jobs-outcome__dismiss {
+  border: 0;
+  background: transparent;
+  color: #6a7d8e;
+  font-size: 14px;
+  cursor: pointer;
+  padding: 0 4px;
+}
+
+.jobs-outcome__dismiss:hover { color: #dde5ef; }
+
+.jobs-outcome__body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.jobs-outcome__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.jobs-outcome__row-label {
+  color: #6a7d8e;
+  min-width: 90px;
+}
+
+.jobs-outcome__row-value {
+  color: #dde5ef;
+  font-weight: 700;
+}
+
+.jobs-outcome__row-value--gold    { color: #d4b860; }
+.jobs-outcome__row-value--xp      { color: #8ed96c; }
+.jobs-outcome__row-value--chain   { color: #7ec8e3; }
+.jobs-outcome__row-value--danger  { color: #e87070; }
+
+/* Level-up banner */
+
+.jobs-levelup-banner {
+  padding: 8px 12px;
+  background: linear-gradient(90deg, #253b1e 0%, #0f1f0d 100%);
+  border-top: 1px solid #3d5a34;
+  font-size: 14px;
+  font-weight: 700;
+  color: #c5e8a5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Item drops list */
+
+.jobs-drops {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 2px;
+}
+
+.jobs-drop-chip {
+  padding: 3px 8px;
+  border: 1px solid #3a2f5c;
+  background: #160f2e;
+  color: #c5a8e8;
+  font-size: 11px;
+}
+
+/* ── Status banner (hospital / jail blocking) ─────────────────────────────── */
+
+.jobs-status-banner {
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid #5c2020;
+  background: linear-gradient(180deg, #1f0d0d 0%, #160808 100%);
+  color: #e87070;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+.jobs-status-banner--jail {
+  border-color: #20405c;
+  background: linear-gradient(180deg, #0d1620 0%, #080f18 100%);
+  color: #70a8e8;
+}
+
+.jobs-status-banner__icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.jobs-status-banner__info {
+  flex: 1;
+}
+
+.jobs-status-banner__title {
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.jobs-status-banner__timer {
+  margin-top: 2px;
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+/* ── Condition chip (sidebar) ─────────────────────────────────────────────── */
+
+.condition-chip {
+  display: inline-block;
+  margin: 6px 0 4px;
+  padding: 3px 8px;
+  border: 1px solid #26303a;
+  font-size: 11px;
+  color: #7a9b82;
+  background: #0d1014;
+}
+
+.condition-chip--danger {
+  border-color: #5c2020;
+  color: #e87070;
+  background: #1a0808;
+}
+
+.condition-chip--jailed {
+  border-color: #20405c;
+  color: #70a8e8;
+  background: #080f18;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .jobs-body {
+    grid-template-columns: 240px 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .jobs-body {
+    grid-template-columns: 1fr;
+  }
+
+  .jobs-categories {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .jobs-category-card {
+    flex: 1 1 160px;
+    min-width: 140px;
+  }
+}
+
+@media (max-width: 600px) {
+  .jobs-subjob-card__stats {
+    gap: 10px;
+  }
+
+  .jobs-subjob-card__top {
+    grid-template-columns: 1fr;
+  }
+
+  .jobs-subjob-card__right {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+/* ─── Category XP Bar (shared bar for whole category) ─────────────────────── */
+
+.jobs-cat-xp {
+  margin-top: 10px;
+  padding: 10px 14px;
+  background: #08120a;
+  border: 1px solid #1e3828;
+}
+
+.jobs-cat-xp__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 5px;
+}
+
+.jobs-cat-xp__level {
+  font-size: 13px;
+  font-weight: 700;
+  color: #6ab87a;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.jobs-cat-xp__numbers {
+  font-size: 11px;
+  color: #6a9a7a;
+  font-weight: 600;
+}
+
+.jobs-cat-xp__track {
+  height: 10px;
+  background: #0b1810;
+  border: 1px solid #1a3020;
+  border-radius: 1px;
+  overflow: hidden;
+}
+
+.jobs-cat-xp__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #2a7a3a 0%, #4ac85a 100%);
+  border-radius: 1px;
+  transition: width 0.4s ease;
+}
+
+.jobs-cat-xp__sub {
+  margin-top: 5px;
+  font-size: 10px;
+  color: #4a6a54;
+}
+
+/* ─── Category header layout update ───────────────────────────────────────── */
+
+.jobs-category-header__top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ─── Low stamina warning ─────────────────────────────────────────────────── */
+
+.jobs-low-stamina {
+  padding: 8px 14px;
+  border: 1px solid #1a4a28;
+  background: #081508;
+  color: #60d480;
+  font-size: 12px;
+  margin-bottom: 4px;
+}
+
+/* ─── Stamina chip ────────────────────────────────────────────────────────── */
+
+.jobs-stat-chip--stamina {
+  color: #4ccc6a;
+}

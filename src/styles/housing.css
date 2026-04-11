@@ -1,0 +1,522 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Housing Page
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.housing-page {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 12px;
+}
+
+/* ─── Toast ─────────────────────────────────────────────────────────────────── */
+
+.housing-toast {
+  position: fixed;
+  top: 56px;
+  right: 16px;
+  z-index: 999;
+  background: #1a2a1a;
+  border: 1px solid #4a7a4a;
+  color: #a8e6a8;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  animation: housing-toast-in 0.2s ease;
+}
+
+@keyframes housing-toast-in {
+  from { opacity: 0; transform: translateY(-6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ─── Gold bar ───────────────────────────────────────────────────────────────── */
+
+.housing-gold-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 14px;
+  background: #0e1a0e;
+  border: 1px solid #2a4a2a;
+}
+
+.housing-gold-bar__label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #6a9a6a;
+  letter-spacing: 0.05em;
+}
+
+.housing-gold-bar__value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #f0c040;
+}
+
+/* ─── Current Property Panel ─────────────────────────────────────────────────── */
+
+.housing-current {
+  display: flex;
+  gap: 16px;
+  padding: 14px;
+  background: linear-gradient(135deg, #0f1f1a 0%, #091209 100%);
+  border: 1px solid #2a4a38;
+}
+
+.housing-current__icon {
+  font-size: 40px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: flex-start;
+  padding-top: 4px;
+}
+
+.housing-current__body {
+  flex: 1;
+}
+
+.housing-current__label {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5a8a6a;
+  margin-bottom: 2px;
+}
+
+.housing-current__name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #d8f0d8;
+  margin-bottom: 4px;
+}
+
+.housing-current__flavour {
+  font-size: 12px;
+  color: #7a9a8a;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.housing-current__stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.housing-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid #1e3a28;
+  min-width: 120px;
+}
+
+.housing-stat--open {
+  border-color: #4a7a5a;
+  background: rgba(74, 122, 90, 0.08);
+}
+
+.housing-stat__key {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5a8a6a;
+}
+
+.housing-stat__val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c8e8c8;
+}
+
+/* ─── Two-column layout ──────────────────────────────────────────────────────── */
+
+.housing-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+/* ─── Tier List (left column) ────────────────────────────────────────────────── */
+
+.housing-tiers__heading {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #5a7a6a;
+  padding: 0 2px 6px;
+  border-bottom: 1px solid #1e2e28;
+  margin-bottom: 4px;
+}
+
+.housing-tier-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 8px 10px;
+  background: #0b1410;
+  border: 1px solid #1a2820;
+  border-top: none;
+  text-align: left;
+  cursor: pointer;
+  transition: background 0.12s ease, border-color 0.12s ease;
+}
+
+.housing-tier-row:first-of-type {
+  border-top: 1px solid #1a2820;
+}
+
+.housing-tier-row:hover {
+  background: #111e18;
+  border-color: #2a4a38;
+}
+
+.housing-tier-row--selected {
+  background: #0e2018;
+  border-color: #3a6a4a !important;
+}
+
+.housing-tier-row--owned {
+  border-left: 3px solid #4a9a5a;
+}
+
+.housing-tier-row--locked {
+  opacity: 0.55;
+}
+
+.housing-tier-row__icon {
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.housing-tier-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.housing-tier-row__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d8e8d8;
+  line-height: 1.2;
+}
+
+.housing-tier-row__summary {
+  font-size: 10px;
+  color: #607a6a;
+  line-height: 1.3;
+  margin-top: 1px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.housing-tier-row__meta {
+  flex-shrink: 0;
+  text-align: right;
+}
+
+.housing-tier-row__comfort {
+  font-size: 10px;
+  color: #7a9a8a;
+}
+
+.housing-tier-row__price {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f0c040;
+  margin-top: 2px;
+}
+
+.housing-tier-row__price--owned {
+  color: #4a9a5a;
+}
+
+/* ─── Detail Panel (right column) ────────────────────────────────────────────── */
+
+.housing-detail-wrap {
+  min-width: 0;
+}
+
+.housing-detail {
+  background: #0b1410;
+  border: 1px solid #1e2e28;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.housing-detail__header {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.housing-detail__icon {
+  font-size: 36px;
+  flex-shrink: 0;
+}
+
+.housing-detail__header-info {
+  flex: 1;
+}
+
+.housing-detail__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e8f4e8;
+  margin-bottom: 4px;
+}
+
+.housing-detail__flavour {
+  font-size: 13px;
+  color: #7a9a8a;
+  line-height: 1.5;
+}
+
+/* ─── Stats grid ─────────────────────────────────────────────────────────────── */
+
+.housing-detail__stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.housing-detail__stat {
+  padding: 8px 10px;
+  background: #091209;
+  border: 1px solid #1a2820;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.housing-detail__stat span {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #5a8a6a;
+}
+
+.housing-detail__stat strong {
+  font-size: 16px;
+  font-weight: 700;
+  color: #c8e8c8;
+}
+
+/* ─── Purchase row ───────────────────────────────────────────────────────────── */
+
+.housing-detail__purchase-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 10px 14px;
+  background: #0a1a0a;
+  border: 1px solid #2a4a2a;
+}
+
+.housing-detail__purchase-note {
+  font-size: 12px;
+  color: #7a9a7a;
+}
+
+.housing-detail__purchase-btn {
+  padding: 8px 20px;
+  background: #1a4a2a;
+  border: 1px solid #3a7a4a;
+  color: #a8e8a8;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  transition: background 0.12s ease, border-color 0.12s ease;
+  white-space: nowrap;
+}
+
+.housing-detail__purchase-btn:hover:not(:disabled) {
+  background: #224a2a;
+  border-color: #5a9a6a;
+}
+
+.housing-detail__purchase-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ─── Upgrades section ───────────────────────────────────────────────────────── */
+
+.housing-detail__upgrades-header {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.housing-detail__upgrades-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #c8e0c8;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.housing-detail__upgrades-slots {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6a9a7a;
+  background: #0e200e;
+  border: 1px solid #2a4a2a;
+  padding: 2px 8px;
+}
+
+.housing-detail__upgrades-note {
+  font-size: 11px;
+  color: #5a7a6a;
+  font-style: italic;
+}
+
+.housing-detail__upgrade-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 10px;
+}
+
+.housing-detail__no-upgrades {
+  font-size: 12px;
+  color: #5a7a6a;
+  font-style: italic;
+  padding: 8px;
+  border: 1px dashed #1a2a1a;
+}
+
+/* ─── Upgrade card ───────────────────────────────────────────────────────────── */
+
+.housing-upgrade {
+  background: #091209;
+  border: 1px solid #1a2820;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  transition: border-color 0.12s ease;
+}
+
+.housing-upgrade:hover {
+  border-color: #2a4a38;
+}
+
+.housing-upgrade--installed {
+  border-color: #3a6a4a;
+  background: #091a09;
+}
+
+.housing-upgrade__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.housing-upgrade__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #d0e8d0;
+  line-height: 1.2;
+}
+
+.housing-upgrade__cost {
+  font-size: 11px;
+  font-weight: 700;
+  color: #f0c040;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.housing-upgrade__installed-tag {
+  color: #5ac87a;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.housing-upgrade__desc {
+  font-size: 11px;
+  color: #6a8a7a;
+  line-height: 1.4;
+}
+
+.housing-upgrade__effects {
+  margin: 0;
+  padding: 0 0 0 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.housing-upgrade__effects li {
+  font-size: 11px;
+  color: #7ac88a;
+  line-height: 1.3;
+}
+
+.housing-upgrade__btn {
+  margin-top: 4px;
+  padding: 6px 12px;
+  background: #112a18;
+  border: 1px solid #2a5a38;
+  color: #88d4a8;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  align-self: flex-start;
+  transition: background 0.12s ease;
+}
+
+.housing-upgrade__btn:hover:not(:disabled) {
+  background: #1a3a22;
+  border-color: #4a8a5a;
+}
+
+.housing-upgrade__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* ─── Responsive ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 960px) {
+  .housing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .housing-detail__stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .housing-detail__stats {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .housing-detail__purchase-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

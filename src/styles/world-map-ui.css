@@ -1,0 +1,205 @@
+.travel-layout {
+  display: grid;
+  grid-template-columns: 1.35fr 0.95fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.travel-panel {
+  border: 1px solid #26303a;
+  background: #0b1014;
+}
+
+.travel-panel--map {
+  grid-row: span 2;
+}
+
+.travel-panel__header {
+  padding: 10px 12px;
+  border-bottom: 1px solid #26303a;
+  background: linear-gradient(180deg, #242931 0%, #1b2026 100%);
+  color: #f7fbff;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.travel-map-frame {
+  position: relative;
+  padding: 10px;
+}
+
+.travel-map-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #1d252c;
+  background: #111;
+}
+
+.travel-pin {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  padding: 0;
+}
+
+.travel-pin__dot {
+  display: block;
+  width: 14px;
+  height: 14px;
+  border-radius: 999px;
+  border: 2px solid #f7fbff;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.12);
+}
+
+.travel-pin__label {
+  display: inline-block;
+  margin-top: 6px;
+  padding: 3px 7px;
+  border: 1px solid #26303a;
+  background: rgba(9, 13, 17, 0.92);
+  color: #f7fbff;
+  font-size: 11px;
+  white-space: nowrap;
+}
+
+.travel-pin--center .travel-pin__dot { background: #d5c46c; }
+.travel-pin--north .travel-pin__dot { background: #8fc4ff; }
+.travel-pin--east .travel-pin__dot { background: #ff9e74; }
+.travel-pin--west .travel-pin__dot { background: #c3b4ff; }
+.travel-pin--south .travel-pin__dot { background: #90df92; }
+
+.travel-card {
+  padding: 12px;
+}
+
+.travel-card--plain {
+  padding-top: 10px;
+}
+
+.travel-card__title {
+  color: #f7fbff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.travel-card__subtitle {
+  margin-top: 3px;
+  color: #98b590;
+  font-size: 13px;
+}
+
+.travel-card__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.travel-info {
+  padding: 10px;
+  border: 1px solid #26303a;
+  background: #090d11;
+}
+
+.travel-info__label {
+  color: #95a3b3;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.travel-info__value {
+  display: block;
+  margin-top: 6px;
+  color: #f7fbff;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.travel-card__summary,
+.travel-region-card__summary {
+  margin: 12px 0 0;
+  color: #dbe5f0;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.travel-subsection {
+  margin-top: 14px;
+}
+
+.travel-subsection__title {
+  margin-bottom: 6px;
+  color: #98b590;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.travel-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #dbe5f0;
+  line-height: 1.6;
+  font-size: 13px;
+}
+
+.travel-region-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px;
+}
+
+.travel-region-card {
+  padding: 10px;
+  border: 1px solid #26303a;
+  background: #090d11;
+}
+
+.travel-region-card__title {
+  color: #f7fbff;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.travel-region-card__kind {
+  margin-top: 2px;
+  color: #95a3b3;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+@media (max-width: 1200px) {
+  .travel-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-panel--map {
+    grid-row: auto;
+  }
+
+  .travel-card__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── City Art ───────────────────────────────────────────────────────────── */
+
+.travel-city-art {
+  width: 100%;
+  aspect-ratio: 16 / 8;
+  overflow: hidden;
+  margin-bottom: 12px;
+  border: 1px solid #1e2a34;
+}
+
+.travel-city-art__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}

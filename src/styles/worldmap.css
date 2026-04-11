@@ -1,0 +1,801 @@
+/* ============================================================
+   worldmap.css — Nexis World Map & Travel UI
+   Torn-inspired dark UI. Matches nexis-theme.css variables.
+   ============================================================ */
+
+/* ── World Map Page Layout ───────────────────────────────── */
+
+.worldmap-page {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.worldmap-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 8px;
+  align-items: start;
+}
+
+/* ── Travel Progress Bar (top of map) ───────────────────── */
+
+.travel-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border: 1px solid #3a4f3a;
+  background: linear-gradient(180deg, #121c12 0%, #0d1510 100%);
+  margin-bottom: 2px;
+  position: relative;
+  overflow: hidden;
+}
+
+.travel-bar--sea {
+  border-color: #1a3a4a;
+  background: linear-gradient(180deg, #0d1a22 0%, #091319 100%);
+}
+
+.travel-bar__icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  animation: travel-bob 2s ease-in-out infinite;
+}
+
+@keyframes travel-bob {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-2px); }
+}
+
+.travel-bar__label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f7fbff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.travel-bar__label span {
+  color: #78a94f;
+}
+
+.travel-bar--sea .travel-bar__label span {
+  color: #4cc9f0;
+}
+
+.travel-bar__progress {
+  flex: 1;
+  height: 8px;
+  background: #0e1c14;
+  border: 1px solid #26303a;
+  overflow: hidden;
+  position: relative;
+}
+
+.travel-bar--sea .travel-bar__progress {
+  background: #091520;
+}
+
+.travel-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #456e32 0%, #78a94f 100%);
+  transition: width 1s linear;
+  position: relative;
+}
+
+.travel-bar--sea .travel-progress-fill {
+  background: linear-gradient(90deg, #1a6080 0%, #4cc9f0 100%);
+}
+
+/* Shimmer effect on fill */
+.travel-progress-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+  animation: shimmer 2s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+  0% { left: -60%; }
+  100% { left: 120%; }
+}
+
+.travel-bar__time {
+  font-size: 12px;
+  font-weight: 700;
+  color: #c0d4c0;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+}
+
+.travel-bar--sea .travel-bar__time {
+  color: #90c8d8;
+}
+
+.travel-bar__cancel {
+  padding: 3px 9px;
+  border: 1px solid #26303a;
+  background: #0d1418;
+  color: #95a3b3;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.travel-bar__cancel:hover {
+  background: #141e25;
+  color: #c0cede;
+}
+
+/* Arrival notification */
+.travel-bar--arrived {
+  border-color: #3d6a30;
+  background: linear-gradient(180deg, #162218 0%, #0f180e 100%);
+  animation: arrival-flash 0.5s ease-out;
+}
+
+@keyframes arrival-flash {
+  0% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+
+.travel-bar__arrived-text {
+  font-size: 13px;
+  font-weight: 700;
+  color: #78a94f;
+}
+
+/* ── World Map Container ─────────────────────────────────── */
+
+.world-map-container {
+  border: 1px solid #26303a;
+  background: #080c10;
+  position: relative;
+  overflow: hidden;
+}
+
+.world-map-container__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #26303a;
+  background: linear-gradient(180deg, #1a2026 0%, #171c22 100%);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f0f2f4;
+}
+
+.world-map-container__location {
+  font-size: 11px;
+  color: #95a3b3;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.world-map-container__location span {
+  color: #c9a84c;
+  font-weight: 700;
+}
+
+.world-map-svg-wrap {
+  padding: 0;
+  background: #0d1117;
+  position: relative;
+}
+
+.world-map-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* ── SVG Map Elements ────────────────────────────────────── */
+
+/* Continent land mass */
+.map-land {
+  fill: #131c22;
+  stroke: #1d2d38;
+  stroke-width: 1;
+}
+
+/* Grid overlay (subtle) */
+.map-grid-line {
+  stroke: rgba(255, 255, 255, 0.025);
+  stroke-width: 0.5;
+}
+
+/* Land routes */
+.travel-route--land {
+  stroke: #8b7355;
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: none;
+  opacity: 0.7;
+}
+
+/* Sea routes — animated dashes */
+.travel-route--sea {
+  stroke: #4cc9f0;
+  stroke-width: 2;
+  fill: none;
+  stroke-dasharray: 8 5;
+  opacity: 0.6;
+  animation: sea-dash 2.5s linear infinite;
+}
+
+@keyframes sea-dash {
+  to { stroke-dashoffset: -52; }
+}
+
+/* Route glow effect */
+.travel-route--land-glow {
+  stroke: #8b7355;
+  stroke-width: 6;
+  fill: none;
+  opacity: 0.1;
+}
+
+.travel-route--sea-glow {
+  stroke: #4cc9f0;
+  stroke-width: 6;
+  fill: none;
+  opacity: 0.08;
+}
+
+/* ── City Nodes ──────────────────────────────────────────── */
+
+.city-node {
+  cursor: pointer;
+}
+
+.city-node__ring {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 0;
+  transition: stroke-width 0.15s, stroke 0.15s, opacity 0.15s;
+}
+
+.city-node:hover .city-node__ring,
+.city-node--hover .city-node__ring {
+  stroke-width: 3;
+  opacity: 0.5;
+}
+
+.city-node__circle {
+  stroke-width: 2;
+  transition: r 0.15s ease, opacity 0.15s;
+}
+
+.city-node--nexis .city-node__circle { fill: #c9a84c; stroke: #f0d06a; }
+.city-node--nexis .city-node__ring { stroke: #c9a84c; }
+.city-node--nexis:hover .city-node__ring { stroke: #f0d06a; }
+
+.city-node--aethermoor .city-node__circle { fill: #9b5de5; stroke: #bb8dff; }
+.city-node--aethermoor .city-node__ring { stroke: #9b5de5; }
+
+.city-node--torvhal .city-node__circle { fill: #e63946; stroke: #ff6878; }
+.city-node--torvhal .city-node__ring { stroke: #e63946; }
+
+.city-node--embervale .city-node__circle { fill: #6a994e; stroke: #90c87a; }
+.city-node--embervale .city-node__ring { stroke: #6a994e; }
+
+.city-node--westmarch .city-node__circle { fill: #8d99ae; stroke: #b0bece; }
+.city-node--westmarch .city-node__ring { stroke: #8d99ae; }
+
+/* Hover / current highlight */
+.city-node:hover .city-node__circle {
+  filter: brightness(1.25);
+}
+
+.city-node--current .city-node__circle {
+  stroke-width: 3;
+}
+
+/* City labels */
+.city-label__name {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  fill: #f7fbff;
+  text-anchor: middle;
+  pointer-events: none;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.8));
+}
+
+.city-label__academy {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  fill: #95a3b3;
+  text-anchor: middle;
+  pointer-events: none;
+}
+
+/* ── Travel Marker (moving icon on route) ───────────────── */
+
+.travel-marker {
+  animation: travel-move 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes travel-move {
+  from { opacity: 0.7; }
+  to { opacity: 1; }
+}
+
+.travel-marker__icon {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  text-anchor: middle;
+  dominant-baseline: middle;
+  filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.8));
+}
+
+/* ── City Tooltip ────────────────────────────────────────── */
+
+.city-tooltip {
+  position: absolute;
+  z-index: 20;
+  min-width: 180px;
+  padding: 10px 12px;
+  border: 1px solid #2e3d48;
+  background: rgba(9, 15, 20, 0.97);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+}
+
+.city-tooltip__name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #f7fbff;
+  margin-bottom: 3px;
+}
+
+.city-tooltip__academy {
+  font-size: 11px;
+  color: #95a3b3;
+  margin-bottom: 8px;
+}
+
+.city-tooltip__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.city-tooltip__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+}
+
+.city-tooltip__row-label {
+  color: #7a8e9a;
+}
+
+.city-tooltip__row-value {
+  color: #e0eaf5;
+  font-weight: 700;
+}
+
+.city-tooltip__row-value--land { color: #b89d72; }
+.city-tooltip__row-value--sea { color: #4cc9f0; }
+
+.city-tooltip__cost {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px solid #1a2430;
+  font-size: 11px;
+  color: #f0dc99;
+}
+
+/* ── Travel Confirmation Panel ───────────────────────────── */
+
+.travel-panel {
+  border: 1px solid #26303a;
+  background: #0b1014;
+  display: flex;
+  flex-direction: column;
+}
+
+.travel-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-bottom: 1px solid #26303a;
+  background: linear-gradient(180deg, #1a2026 0%, #171c22 100%);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f0f2f4;
+}
+
+.travel-panel__close {
+  background: transparent;
+  border: 0;
+  color: #7a8e9a;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0 4px;
+  line-height: 1;
+}
+
+.travel-panel__close:hover {
+  color: #c0cede;
+}
+
+.travel-panel__body {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.travel-panel__destination {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.travel-panel__dest-name {
+  font-size: 20px;
+  font-weight: 700;
+  color: #f7fbff;
+}
+
+.travel-panel__dest-academy {
+  font-size: 12px;
+  color: #95a3b3;
+}
+
+.travel-panel__info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+}
+
+.travel-info-cell {
+  padding: 8px 10px;
+  border: 1px solid #1e2a30;
+  background: #090d11;
+}
+
+.travel-info-cell__label {
+  font-size: 10px;
+  color: #7a8e9a;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.travel-info-cell__value {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f7fbff;
+}
+
+.travel-panel__warning {
+  padding: 8px 10px;
+  border: 1px solid #3a2a1a;
+  background: #1a130a;
+  font-size: 11px;
+  color: #d0a060;
+  line-height: 1.5;
+}
+
+.travel-panel__warning::before {
+  content: '⚠ ';
+}
+
+.travel-panel__actions {
+  display: flex;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.travel-confirm-btn {
+  flex: 1;
+  padding: 9px 14px;
+  border: 1px solid #3d5a34;
+  background: #20341b;
+  color: #eef8e2;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.travel-confirm-btn:hover {
+  background: #2a4523;
+  border-color: #507040;
+}
+
+.travel-confirm-btn--sea {
+  border-color: #1a4a60;
+  background: #0d2030;
+  color: #c0e8f8;
+}
+
+.travel-confirm-btn--sea:hover {
+  background: #122840;
+  border-color: #2a6080;
+}
+
+.travel-cancel-btn {
+  padding: 9px 14px;
+  border: 1px solid #26303a;
+  background: #0d1418;
+  color: #95a3b3;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.travel-cancel-btn:hover {
+  background: #141e25;
+  color: #c0cede;
+}
+
+/* ── Info Sidebar (right panel) ──────────────────────────── */
+
+.map-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-legend {
+  border: 1px solid #26303a;
+  background: #0b1014;
+}
+
+.map-legend__header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #26303a;
+  background: linear-gradient(180deg, #1a2026 0%, #171c22 100%);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f0f2f4;
+}
+
+.map-legend__body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.map-legend__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #c0cede;
+}
+
+.map-legend__line {
+  width: 28px;
+  height: 3px;
+  flex-shrink: 0;
+  border-radius: 2px;
+}
+
+.map-legend__line--land {
+  background: #8b7355;
+}
+
+.map-legend__line--sea {
+  background: linear-gradient(90deg, #4cc9f0 50%, transparent 50%);
+  background-size: 8px 3px;
+}
+
+.map-city-list {
+  border: 1px solid #26303a;
+  background: #0b1014;
+}
+
+.map-city-list__header {
+  padding: 8px 12px;
+  border-bottom: 1px solid #26303a;
+  background: linear-gradient(180deg, #1a2026 0%, #171c22 100%);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #f0f2f4;
+}
+
+.map-city-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border-bottom: 1px solid #1a2025;
+  cursor: pointer;
+  transition: background 0.1s;
+}
+
+.map-city-row:last-child {
+  border-bottom: 0;
+}
+
+.map-city-row:hover {
+  background: #111c22;
+}
+
+.map-city-row--current {
+  background: rgba(201, 168, 76, 0.04);
+  cursor: default;
+}
+
+.map-city-row__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.map-city-row__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.map-city-row__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: #f7fbff;
+}
+
+.map-city-row__academy {
+  font-size: 10px;
+  color: #95a3b3;
+}
+
+.map-city-row__travel {
+  font-size: 11px;
+  color: #7a8e9a;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.map-city-row__here-badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: #c9a84c;
+  background: rgba(201, 168, 76, 0.1);
+  border: 1px solid rgba(201, 168, 76, 0.25);
+  padding: 1px 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* ── Travel Bar (Sidebar Compact Widget) ─────────────────── */
+
+.travel-bar-compact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid #26303a;
+  background: linear-gradient(180deg, #121a14 0%, #0d1410 100%);
+  overflow: hidden;
+}
+
+.travel-bar-compact--sea {
+  border-color: #1a3040;
+  background: linear-gradient(180deg, #0d1720 0%, #091318 100%);
+}
+
+.travel-bar-compact__arrow {
+  font-size: 11px;
+  color: #78a94f;
+  flex-shrink: 0;
+}
+
+.travel-bar-compact--sea .travel-bar-compact__arrow {
+  color: #4cc9f0;
+}
+
+.travel-bar-compact__dest {
+  font-size: 12px;
+  font-weight: 700;
+  color: #f7fbff;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.travel-bar-compact__bar {
+  flex: 1;
+  height: 4px;
+  background: #0e1c14;
+  border: 1px solid #1e2e24;
+  overflow: hidden;
+}
+
+.travel-bar-compact--sea .travel-bar-compact__bar {
+  background: #091520;
+  border-color: #1a2e3a;
+}
+
+.travel-bar-compact__fill {
+  height: 100%;
+  background: linear-gradient(90deg, #456e32 0%, #78a94f 100%);
+  transition: width 1s linear;
+}
+
+.travel-bar-compact--sea .travel-bar-compact__fill {
+  background: linear-gradient(90deg, #1a6080 0%, #4cc9f0 100%);
+}
+
+.travel-bar-compact__time {
+  font-size: 11px;
+  color: #90b898;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+}
+
+.travel-bar-compact--sea .travel-bar-compact__time {
+  color: #60a8c0;
+}
+
+/* ── No Selection State ──────────────────────────────────── */
+
+.travel-panel--empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #4a5e6a;
+  border: 1px solid #1a2430;
+  background: #090d11;
+}
+
+.travel-panel--empty strong {
+  display: block;
+  color: #6a8898;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+/* ── Responsive ──────────────────────────────────────────── */
+
+@media (max-width: 1100px) {
+  .worldmap-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .map-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 700px) {
+  .map-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .travel-panel__info-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,51 @@
+.hospital-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #dbe2ec;
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+.hospital-list li + li {
+  margin-top: 8px;
+}
+
+.hospital-note {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+  color: #d8e7d1;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.hospital-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hospital-btn {
+  min-height: 34px;
+  padding: 8px 10px;
+  background: linear-gradient(180deg, #1d2a19 0%, #121b10 100%);
+  border: 1px solid #2e3a2a;
+  color: #dbe9d5;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.hospital-btn:hover {
+  background: linear-gradient(180deg, #243324 0%, #172116 100%);
+}
+
+.hospital-btn--danger {
+  background: linear-gradient(180deg, #3a1d1d 0%, #251111 100%);
+  border-color: #4b2b2b;
+  color: #f4d7d7;
+}
+
+.hospital-btn--danger:hover {
+  background: linear-gradient(180deg, #462323 0%, #2b1515 100%);
+}

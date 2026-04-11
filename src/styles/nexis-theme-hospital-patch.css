@@ -1,0 +1,90 @@
+/* ── Player Card ──────────────────────────────────────────────── */
+
+.player-card {
+  padding: 8px 10px 10px;
+  border-bottom: 1px solid #1e2a34;
+  margin-bottom: 0;
+}
+
+.player-card__name {
+  font-size: 13px;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.player-card__username {
+  color: #e8943a;
+  font-weight: 700;
+}
+
+.player-card__id {
+  color: #6a7f8e;
+  font-size: 11px;
+}
+
+.player-card__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-bottom: 6px;
+}
+
+.player-card__row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.player-card__key {
+  color: #6a7f8e;
+}
+
+.player-card__val {
+  color: #c8d8e4;
+  font-weight: 600;
+}
+
+/* ── Gold row highlight ───────────────────────────────────────── */
+
+.player-card__row--gold {
+  margin-top: 3px;
+  padding-top: 3px;
+  border-top: 1px solid #1e2a34;
+}
+
+.player-card__val--gold {
+  color: #f0c040;
+  font-weight: 700;
+}
+
+/* ── Condition chip ────────────────────────────────────────────── */
+
+.player-condition {
+  display: inline-block;
+  padding: 3px 7px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border: 1px solid #26303a;
+  background: #0b1014;
+  color: #dbe5f0;
+}
+
+.player-condition--hospital {
+  border-color: #5d3131;
+  background: #1a0d0d;
+  color: #ffd8d8;
+}
+
+.player-condition--jail {
+  border-color: #4a4a1e;
+  background: #141408;
+  color: #fffbb8;
+}
+
+/* Legacy aliases — keep for any remaining uses */
+.condition-chip               { padding: 3px 7px; font-size: 10px; font-weight: 700; text-transform: uppercase; border: 1px solid #26303a; background: #0b1014; color: #dbe5f0; }
+.condition-chip--danger       { border-color: #5d3131; background: #1a0d0d; color: #ffd8d8; }
+.condition-chip--jailed       { border-color: #4a4a1e; background: #141408; color: #fffbb8; }

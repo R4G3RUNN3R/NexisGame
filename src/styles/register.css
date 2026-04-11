@@ -1,0 +1,242 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Register Page Styles
+   Two-panel layout: hero image on left, form on right.
+───────────────────────────────────────────────────────────────────────────── */
+
+.register-page {
+  min-height: 100vh;
+  display: flex;
+  background: #060b0e;
+}
+
+/* ── Hero Panel ────────────────────────────────────────────────────────────── */
+
+.register-hero {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  display: none; /* hidden on mobile — shows on wider screens */
+}
+
+@media (min-width: 800px) {
+  .register-hero { display: block; }
+}
+
+.register-hero__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.register-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to right,
+    transparent 40%,
+    #060b0e 100%
+  );
+}
+
+.register-hero__title {
+  position: absolute;
+  bottom: 40px;
+  left: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.register-hero__nexis {
+  font-size: 42px;
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  color: #e8943a;
+  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.8);
+}
+
+.register-hero__sub {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: #8aacbc;
+  text-transform: uppercase;
+}
+
+/* ── Form Panel ────────────────────────────────────────────────────────────── */
+
+.register-panel {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+}
+
+.register-panel__inner {
+  width: 100%;
+  max-width: 360px;
+}
+
+.register-heading {
+  font-size: 22px;
+  font-weight: 700;
+  color: #dde8f0;
+  margin: 0 0 6px;
+  letter-spacing: 0.02em;
+}
+
+.register-subtext {
+  font-size: 12px;
+  color: #546e7a;
+  margin: 0 0 24px;
+  line-height: 1.5;
+}
+
+/* ── Form fields ─────────────────────────────────────────────────────────── */
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: 14px;
+}
+
+.register-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #7a8fa0;
+}
+
+.register-input {
+  background: #0b1418;
+  border: 1px solid #1e2e3a;
+  color: #dde8f0;
+  font-size: 14px;
+  padding: 10px 12px;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border-color 0.15s;
+}
+
+.register-input:focus {
+  border-color: #3a6080;
+}
+
+.register-input--error {
+  border-color: #8a2020;
+  background: #110808;
+}
+
+.register-error {
+  font-size: 11px;
+  color: #e07070;
+  margin: 0;
+}
+
+/* ── Note ────────────────────────────────────────────────────────────────── */
+
+.register-note {
+  font-size: 11px;
+  color: #3a5060;
+  line-height: 1.5;
+  padding: 10px 12px;
+  background: #070d10;
+  border: 1px solid #162028;
+  margin-bottom: 18px;
+}
+
+/* ── Submit ──────────────────────────────────────────────────────────────── */
+
+.register-submit {
+  width: 100%;
+  padding: 12px;
+  background: #1a3048;
+  border: 1px solid #2a5070;
+  color: #90c8f0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+
+.register-submit:hover:not(:disabled) {
+  background: #1e4060;
+  border-color: #4080a0;
+  color: #c0e8ff;
+}
+
+.register-submit:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* ── Name row (side by side) ─────────────────────────────────────────────── */
+
+.register-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+@media (max-width: 500px) {
+  .register-row { grid-template-columns: 1fr; }
+}
+
+/* ── Server error ────────────────────────────────────────────────────────── */
+
+.register-server-error {
+  font-size: 12px;
+  color: #ff8080;
+  background: #1a0808;
+  border: 1px solid #3a1515;
+  padding: 10px 12px;
+  margin-bottom: 14px;
+  line-height: 1.4;
+}
+
+/* ── Switch link ─────────────────────────────────────────────────────────── */
+
+.register-switch {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #546e7a;
+}
+
+.register-switch__btn {
+  background: none;
+  border: none;
+  color: #6aaad0;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.register-switch__btn:hover {
+  color: #90d0ff;
+}
+
+/* ── Footer ──────────────────────────────────────────────────────────────── */
+
+.register-footer {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 11px;
+  color: #28404e;
+  letter-spacing: 0.04em;
+}

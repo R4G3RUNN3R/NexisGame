@@ -1,0 +1,191 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Hospital Full Page Styles
+───────────────────────────────────────────────────────────────────────────── */
+
+/* Status badge */
+.hosp-status-badge {
+  display: inline-block;
+  padding: 5px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  border: 1px solid;
+  margin-bottom: 10px;
+}
+
+.hosp-status-badge--normal {
+  border-color: #2a3f50;
+  background: #0b1418;
+  color: #7ab4c8;
+}
+
+.hosp-status-badge--hospitalized {
+  border-color: #7a2020;
+  background: #1a0808;
+  color: #ff8080;
+}
+
+.hosp-status-badge--jailed {
+  border-color: #5a5020;
+  background: #141208;
+  color: #ffe060;
+}
+
+/* Timer block */
+.hosp-timer {
+  margin-bottom: 8px;
+}
+
+.hosp-timer__label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #546e7a;
+  margin-bottom: 4px;
+}
+
+.hosp-timer__value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ff8080;
+  font-variant-numeric: tabular-nums;
+}
+
+.hosp-timer__bar-track {
+  height: 4px;
+  background: #1a0a0a;
+  border: 1px solid #3a1818;
+  margin-top: 8px;
+}
+
+.hosp-timer__bar-fill {
+  height: 100%;
+  background: #e53935;
+  transition: width 1s linear;
+}
+
+/* Health percentage hint */
+.hosp-health-pct {
+  font-size: 10px;
+  color: #546e7a;
+  margin-left: 4px;
+}
+
+/* Restriction lists */
+.hospital-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.hospital-list li {
+  font-size: 12px;
+  color: #9aa8b4;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  line-height: 1.4;
+}
+
+.hosp-list-icon {
+  color: #e53935;
+  font-weight: 700;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.hosp-list-icon--allow {
+  color: #4caf50;
+}
+
+.hospital-list--blocked li {
+  color: #9a7070;
+}
+
+.hospital-list--allowed li {
+  color: #7a9a7a;
+}
+
+/* Clear / normal state */
+.hosp-clear {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #070f0b;
+  border: 1px solid #1a3024;
+}
+
+.hosp-clear__icon {
+  font-size: 20px;
+  color: #4caf50;
+}
+
+.hosp-clear__text {
+  font-size: 12px;
+  color: #7ab87a;
+}
+
+/* Note style — override old one */
+.hospital-note {
+  font-size: 11px;
+  color: #6a7f8e;
+  line-height: 1.5;
+  padding: 8px 10px;
+  background: #080d10;
+  border: 1px solid #1a2a34;
+  margin-top: 6px;
+}
+
+.hospital-note--redirect {
+  border-color: #4a2020;
+  background: #0f0808;
+  color: #c07070;
+}
+
+/* Status block container */
+.hosp-status-block {
+  padding: 10px 0 4px;
+}
+
+/* Action button improvements */
+.hospital-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.hospital-btn {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  background: #0d1820;
+  border: 1px solid #2a4060;
+  color: #8ab8d4;
+  text-align: left;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.hospital-btn:hover {
+  background: #122030;
+  border-color: #3a6080;
+  color: #b0d8f4;
+}
+
+.hospital-btn--danger {
+  background: #1a0808;
+  border-color: #6a2020;
+  color: #e07070;
+}
+
+.hospital-btn--danger:hover {
+  background: #220a0a;
+  border-color: #9a3030;
+  color: #ff9090;
+}

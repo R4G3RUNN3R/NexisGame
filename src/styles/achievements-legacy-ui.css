@@ -1,0 +1,329 @@
+.legacy-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.legacy-summary-card {
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  background: linear-gradient(180deg, #3f4145 0%, #2f3134 100%);
+}
+
+.legacy-summary-card__label {
+  display: block;
+  color: #cfd6ca;
+  font-size: 11px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.legacy-summary-card strong {
+  font-size: 22px;
+  color: #f5f7f2;
+}
+
+.legacy-green {
+  color: #6ed26f;
+}
+
+.legacy-red {
+  color: #d67171;
+}
+
+.legacy-main-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 10px;
+  align-items: start;
+}
+
+.legacy-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.legacy-toolbar {
+  display: grid;
+  gap: 10px;
+}
+
+.legacy-filter-group {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.legacy-filter-group--spaced {
+  margin-bottom: 10px;
+}
+
+.legacy-chip {
+  border: 1px solid #363b40;
+  background: #171b1f;
+  color: #cfd6ca;
+  padding: 6px 10px;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.legacy-chip--active {
+  background: #335d2d;
+  color: #fff;
+}
+
+.legacy-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: #d7ddd5;
+}
+
+.legacy-achievements-table {
+  display: grid;
+  gap: 0;
+  border: 1px solid #2b3136;
+}
+
+.legacy-achievements-header,
+.legacy-achievement-row {
+  display: grid;
+  grid-template-columns: 90px 160px 1fr 180px 70px;
+  gap: 10px;
+  padding: 9px 10px;
+  align-items: center;
+}
+
+.legacy-achievements-header {
+  background: #1d2126;
+  border-bottom: 1px solid #2b3136;
+  font-size: 11px;
+  text-transform: uppercase;
+  color: #9ba39a;
+}
+
+.legacy-achievement-row {
+  background: #111417;
+  border-bottom: 1px solid #242a2f;
+  font-size: 12px;
+}
+
+.legacy-achievement-row--complete {
+  background: linear-gradient(90deg, rgba(56, 93, 45, 0.45), rgba(17, 20, 23, 1) 65%);
+}
+
+.legacy-achievement-name {
+  font-weight: 700;
+  color: #f1f3f0;
+}
+
+.legacy-progress {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.legacy-progress__bar {
+  height: 9px;
+  border: 1px solid #21272c;
+  background: #090c0f;
+  position: relative;
+  overflow: hidden;
+}
+
+.legacy-progress__bar > span {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: linear-gradient(90deg, #5aa244 0%, #9adf76 100%);
+}
+
+.legacy-progress__text {
+  font-size: 11px;
+  color: #dbe1d8;
+}
+
+.legacy-merit-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.merit-card {
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid #2b3136;
+  background: #26292d;
+  color: #f5f7f2;
+  cursor: pointer;
+  text-align: left;
+}
+
+.merit-card--active {
+  border-color: #55695a;
+  background: #31352f;
+}
+
+.merit-card__icon-wrap {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+}
+
+.legacy-ring {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.legacy-ring__bars {
+  position: relative;
+  width: 64px;
+  height: 64px;
+}
+
+.legacy-ring__bar {
+  position: absolute;
+  left: 29px;
+  top: 29px;
+  width: 6px;
+  height: 12px;
+  border-radius: 4px;
+  background: #5f6164;
+  transform-origin: center 17px;
+}
+
+.legacy-ring__bar--filled {
+  background: #86dc5c;
+  box-shadow: 0 0 4px rgba(134, 220, 92, 0.4);
+}
+
+.merit-card__icon {
+  position: relative;
+  z-index: 2;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(circle at top, #41454a 0%, #1d2023 100%);
+  border: 2px solid #454a4f;
+  font-size: 18px;
+  color: #d7d8d8;
+}
+
+.merit-card__content {
+  display: grid;
+  gap: 4px;
+}
+
+.merit-card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: center;
+}
+
+.merit-card__name {
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.merit-card__rank {
+  font-size: 12px;
+  color: #d9e3d5;
+}
+
+.merit-card__description {
+  font-size: 12px;
+  color: #cad0c9;
+  line-height: 1.35;
+}
+
+.legacy-selected-panel {
+  border-top: 1px solid #2b3136;
+  padding-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.legacy-selected-panel__text {
+  font-size: 14px;
+  color: #e7ece6;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.legacy-selected-panel__warning {
+  color: #f08080;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.legacy-selected-panel__warning--ok {
+  color: #8ee07d;
+}
+
+.legacy-selected-panel__actions {
+  display: flex;
+  justify-content: center;
+}
+
+.legacy-spend-button {
+  min-width: 96px;
+  padding: 9px 18px;
+  border: 1px solid #363b40;
+  background: linear-gradient(180deg, #2d3034 0%, #1d2023 100%);
+  color: #f5f7f2;
+  font-weight: 700;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.legacy-spend-button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1300px) {
+  .legacy-merit-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 1200px) {
+  .legacy-main-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .legacy-achievements-header,
+  .legacy-achievement-row {
+    grid-template-columns: 1fr;
+  }
+
+  .legacy-summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .legacy-merit-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .merit-card {
+    grid-template-columns: 64px 1fr;
+  }
+}

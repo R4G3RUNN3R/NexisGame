@@ -1,0 +1,236 @@
+.academies-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.45fr 0.85fr;
+  gap: 8px;
+  align-items: start;
+}
+
+.academies-column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.academy-rule-list,
+.academy-ordered-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #dbe2ec;
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+.academy-rule-list li + li,
+.academy-ordered-list li + li {
+  margin-top: 8px;
+}
+
+.academy-card-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.academy-card {
+  padding: 10px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+  color: #dbe5f0;
+  text-align: left;
+  cursor: pointer;
+}
+
+.academy-card:hover {
+  background: #111820;
+}
+
+.academy-card--active {
+  border-color: #3d5a34;
+  background: linear-gradient(180deg, #172017 0%, #101710 100%);
+}
+
+.academy-card__title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #f7fbff;
+}
+
+.academy-card__subtitle {
+  margin-top: 2px;
+  font-size: 12px;
+  color: #9db8a2;
+}
+
+.academy-card__theme,
+.academy-card__location {
+  margin-top: 6px;
+  font-size: 12px;
+  color: #b8c2cd;
+  line-height: 1.45;
+}
+
+.academy-header-block__theme {
+  font-size: 13px;
+  color: #98b590;
+  margin-bottom: 8px;
+}
+
+.academy-header-block__description {
+  margin: 0;
+  color: #d8e7d1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.academy-meta-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px 12px;
+  margin-top: 12px;
+}
+
+.academy-meta-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+}
+
+.academy-meta-row__label {
+  color: #95a3b3;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.academy-meta-row__value {
+  color: #f7fbff;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.academy-rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.academy-rank-card {
+  padding: 12px;
+  border: 1px solid #26303a;
+  background: #0b1014;
+}
+
+.academy-rank-card__top {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: center;
+}
+
+.academy-rank-card__rank {
+  color: #95a3b3;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.academy-rank-card__mode {
+  padding: 3px 8px;
+  border: 1px solid #26303a;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.academy-rank-card__mode--passive { color: #8dd0ff; }
+.academy-rank-card__mode--active { color: #ffb08d; }
+.academy-rank-card__mode--mixed { color: #b8f1a3; }
+.academy-rank-card__mode--unlock { color: #f0dc99; }
+.academy-rank-card__mode--branch { color: #d9a6ff; }
+.academy-rank-card__mode--tbd { color: #a9a9a9; }
+
+.academy-rank-card h3 {
+  margin: 8px 0 6px;
+  color: #f7fbff;
+  font-size: 16px;
+}
+
+.academy-rank-card p {
+  margin: 0;
+  color: #dbe2ec;
+  line-height: 1.55;
+  font-size: 13px;
+}
+
+.academy-rank-card__foot {
+  margin-top: 8px;
+  color: #9db8a2;
+  font-size: 12px;
+}
+
+.academy-rank-card__block {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid #1d252c;
+}
+
+.academy-rank-card__block ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+  color: #dbe2ec;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.academy-rank-card__label {
+  color: #95a3b3;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.academy-summary-block + .academy-summary-block {
+  margin-top: 14px;
+}
+
+.academy-summary-block__label {
+  margin-bottom: 6px;
+  color: #98b590;
+  font-size: 11px;
+  text-transform: uppercase;
+}
+
+.academy-summary-block p,
+.academy-goal-note {
+  margin: 0;
+  color: #d8e7d1;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+@media (max-width: 1200px) {
+  .academies-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .academy-meta-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ── Academy Art ────────────────────────────────────────────────────────── */
+
+.academy-art-frame {
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  overflow: hidden;
+  margin-bottom: 14px;
+  border: 1px solid #1e2a34;
+}
+
+.academy-art-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}

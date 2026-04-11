@@ -1,0 +1,30 @@
+.ciel-orb-anchor { position: fixed; width: 64px; height: 64px; margin: 0; padding: 0; border: 0; background: transparent; cursor: grab; z-index: 2000; }
+.ciel-orb-anchor--dragging { cursor: grabbing; }
+.ciel-orb-shell { position: relative; display: block; width: 64px; height: 64px; border-radius: 999px; animation: ciel-float 3.6s ease-in-out infinite; filter: drop-shadow(0 0 14px rgba(78, 224, 255, 0.45)); }
+.ciel-orb-core { position: absolute; inset: 9px; border-radius: 999px; background: radial-gradient(circle at 35% 30%, rgba(255,255,255,0.95) 0%, rgba(196,248,255,0.88) 14%, rgba(80,225,255,0.95) 32%, rgba(28,147,205,0.92) 64%, rgba(8,57,96,0.95) 100%); box-shadow: inset 0 0 16px rgba(255,255,255,0.28), 0 0 22px rgba(51, 214, 255, 0.5); }
+.ciel-orb-ring { position: absolute; inset: 2px; border-radius: 999px; border: 1px solid rgba(142, 237, 255, 0.25); }
+.ciel-orb-ring--one { animation: ciel-spin 7s linear infinite; }
+.ciel-orb-ring--two { inset: 6px; border-color: rgba(167, 244, 255, 0.18); animation: ciel-spin-reverse 10s linear infinite; }
+.ciel-orb-spark { position: absolute; width: 8px; height: 8px; border-radius: 999px; background: rgba(220, 252, 255, 0.95); box-shadow: 0 0 10px rgba(175, 245, 255, 0.9); }
+.ciel-orb-spark--one { top: 13px; right: 12px; }
+.ciel-orb-spark--two { bottom: 14px; left: 13px; width: 5px; height: 5px; }
+.ciel-dialogue { position: fixed; width: 340px; border: 1px solid rgba(76, 178, 208, 0.35); background: rgba(9, 14, 20, 0.96); color: #d8edf7; box-shadow: 0 16px 40px rgba(0, 0, 0, 0.42); backdrop-filter: blur(8px); z-index: 1999; }
+.ciel-dialogue__header { display: flex; justify-content: space-between; gap: 12px; padding: 12px; border-bottom: 1px solid rgba(69, 111, 130, 0.32); background: linear-gradient(180deg, rgba(26, 36, 48, 0.98) 0%, rgba(16, 24, 34, 0.98) 100%); }
+.ciel-dialogue__title { color: #f0fbff; font-size: 14px; font-weight: 700; letter-spacing: 0.08em; }
+.ciel-dialogue__page { margin-top: 3px; color: #8db9c9; font-size: 11px; text-transform: uppercase; }
+.ciel-dialogue__actions { display: flex; gap: 6px; }
+.ciel-dialogue__icon-button { min-width: 56px; min-height: 28px; border: 1px solid rgba(70, 98, 111, 0.48); background: rgba(8, 13, 18, 0.95); color: #d8edf7; font-size: 11px; cursor: pointer; }
+.ciel-dialogue__icon-button:hover, .ciel-dialogue__prompt:hover { background: rgba(18, 29, 40, 0.98); }
+.ciel-dialogue__body { padding: 12px; }
+.ciel-dialogue__latest { padding: 10px; border: 1px solid rgba(67, 104, 120, 0.35); background: rgba(12, 18, 25, 0.95); color: #d8edf7; font-size: 13px; line-height: 1.6; white-space: pre-line; }
+.ciel-dialogue__prompt-label { margin-top: 12px; margin-bottom: 6px; color: #8db9c9; font-size: 11px; text-transform: uppercase; }
+.ciel-dialogue__prompt-list { display: flex; flex-direction: column; gap: 6px; }
+.ciel-dialogue__prompt { width: 100%; padding: 9px 10px; border: 1px solid rgba(70, 98, 111, 0.4); background: rgba(8, 13, 18, 0.95); color: #d8edf7; text-align: left; font-size: 12px; cursor: pointer; }
+.ciel-dialogue__history { display: flex; flex-direction: column; gap: 6px; }
+.ciel-dialogue__message { padding: 8px 10px; font-size: 12px; line-height: 1.55; }
+.ciel-dialogue__message--user { border: 1px solid rgba(83, 83, 83, 0.35); background: rgba(24, 24, 24, 0.92); color: #d5d7da; }
+.ciel-dialogue__message--ciel { border: 1px solid rgba(67, 104, 120, 0.35); background: rgba(12, 18, 25, 0.95); color: #d8edf7; }
+@keyframes ciel-float { 0% { transform: translateY(0px) scale(1); } 50% { transform: translateY(-5px) scale(1.02); } 100% { transform: translateY(0px) scale(1); } }
+@keyframes ciel-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+@keyframes ciel-spin-reverse { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
+@media (max-width: 800px) { .ciel-dialogue { width: min(320px, calc(100vw - 24px)); } }

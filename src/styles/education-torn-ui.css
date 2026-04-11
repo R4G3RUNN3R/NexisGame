@@ -1,0 +1,115 @@
+/* ── Original education UI (preserved verbatim) ──────────────────────────────*/
+.education-page { display: flex; flex-direction: column; gap: 10px; }
+.edu-banner { display: grid; grid-template-columns: 40px 1fr auto; gap: 12px; align-items: center; padding: 10px 12px; border: 1px solid #26303a; background: linear-gradient(180deg, #4b4f55 0%, #36393e 100%); color: #f3f7fb; }
+.edu-banner__icon { display: flex; align-items: center; justify-content: center; width: 28px; height: 28px; font-size: 28px; font-style: italic; color: #e7f6ff; }
+.edu-banner__title { font-size: 16px; font-weight: 700; }
+.edu-banner__title span { color: #b9ddff; }
+.edu-banner__subtitle { margin-top: 4px; font-size: 14px; }
+.edu-banner__actions { display: flex; gap: 8px; }
+.edu-banner__button, .edu-action-button { min-width: 92px; min-height: 34px; padding: 7px 12px; border: 1px solid #26303a; background: #10151a; color: #dbe5f0; cursor: pointer; }
+.edu-banner__button:hover, .edu-action-button:hover { background: #151d24; }
+.edu-action-button:disabled { opacity: 0.45; cursor: not-allowed; }
+.edu-action-button--primary { border-color: #58793f; background: #20341b; color: #eef8e2; }
+.edu-category-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.edu-category-card { padding: 10px; border: 1px solid #26303a; background: #0b1014; text-align: left; color: #e6edf5; cursor: pointer; }
+.edu-category-card:hover { background: #121920; }
+.edu-category-card--active { border-color: #506a3e; }
+.edu-category-card__title { font-size: 14px; font-weight: 700; text-transform: uppercase; }
+.edu-category-card__image { height: 74px; margin-top: 10px; border: 1px solid #313844; background: linear-gradient(180deg, #ddd9d0 0%, #b7b2a6 100%); }
+.edu-category-card__footer { display: flex; align-items: center; gap: 8px; margin-top: 10px; }
+.edu-category-card__progress { flex: 1; height: 12px; border: 1px solid #26303a; background: #1d2228; }
+.edu-category-card__progress-fill { height: 100%; background: linear-gradient(90deg, #57b34d 0%, #90d975 100%); }
+.edu-category-card__count { font-size: 13px; color: #dbe5f0; }
+.edu-lower-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.edu-panel { border: 1px solid #26303a; background: #0b1014; }
+.edu-panel__header { display: flex; justify-content: space-between; align-items: center; padding: 10px 12px; border-bottom: 1px solid #26303a; background: linear-gradient(180deg, #232931 0%, #1a2027 100%); color: #f7fbff; font-size: 14px; font-weight: 700; text-transform: uppercase; }
+.edu-course-list { display: flex; flex-direction: column; }
+.edu-course-row { display: grid; grid-template-columns: 18px 84px 1fr; gap: 10px; align-items: center; padding: 9px 10px; border-bottom: 1px solid #26303a; background: #4a4f57; color: #f4f7fb; text-align: left; cursor: pointer; }
+.edu-course-row:hover { background: #59606a; }
+.edu-course-row--selected { background: #68819a; }
+.edu-course-row__bullet { width: 8px; height: 8px; border-radius: 999px; border: 2px solid #d9dde3; }
+.edu-course-row--completed .edu-course-row__bullet { border-color: #77e04a; }
+.edu-course-row--current .edu-course-row__bullet { border-color: #40aef8; }
+.edu-course-row--available .edu-course-row__bullet { border-color: #ff8c2f; }
+.edu-course-row--locked .edu-course-row__bullet { border-color: #8a5555; }
+.edu-course-row__code { color: #d5dbe4; font-size: 12px; }
+.edu-course-row__name { font-size: 14px; }
+.edu-detail-card__completed-banner { padding: 10px 12px; background: #6e8844; color: #f5f9ec; font-size: 16px; font-weight: 700; }
+.edu-detail-card__body { padding: 12px; color: #edf2f8; }
+.edu-detail-card__course-title { font-size: 18px; font-weight: 700; }
+.edu-detail-card__description { margin-top: 8px; line-height: 1.6; font-size: 14px; }
+.edu-detail-section { margin-top: 14px; }
+.edu-detail-section__label { margin-bottom: 6px; color: #dfe9b8; font-size: 13px; font-weight: 700; }
+.edu-detail-list { margin: 0; padding-left: 18px; line-height: 1.55; font-size: 14px; }
+.edu-detail-card__plain { font-size: 14px; }
+.edu-detail-card__actions { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-start; }
+.edu-passive-strip { display: flex; flex-direction: column; gap: 1px; border-top: 1px solid #26303a; }
+.edu-passive-strip__block { padding: 10px 12px; background: #10151a; }
+.edu-passive-strip__label { color: #dfe9b8; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.edu-passive-strip__value { margin-top: 6px; color: #dbe5f0; font-size: 13px; line-height: 1.5; }
+@media (max-width: 1200px) { .edu-category-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } .edu-lower-grid { grid-template-columns: 1fr; } }
+@media (max-width: 800px) { .edu-banner { grid-template-columns: 1fr; } .edu-category-grid { grid-template-columns: 1fr; } }
+
+/* ── Learn Button States (new) ───────────────────────────────────────────────*/
+
+/* Wrapper for the action area (replaces the old bare button) */
+.edu-action-area {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+/* Green "Completed ✓" badge */
+.edu-action-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 7px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  border: 1px solid transparent;
+}
+
+.edu-action-badge--completed {
+  border-color: #4d8a3a;
+  background: #1b3a16;
+  color: #a8e080;
+}
+
+/* Countdown text when this course is active */
+.edu-action-countdown {
+  font-size: 13px;
+  color: #40aef8;
+  font-weight: 600;
+  padding: 6px 0 2px;
+}
+
+/* Cancel button variant */
+.edu-action-button--cancel {
+  border-color: #7a3535;
+  background: #2e1515;
+  color: #f8d0d0;
+}
+
+.edu-action-button--cancel:hover {
+  background: #3a1c1c;
+}
+
+/* Small hint text under a disabled Learn button */
+.edu-action-hint {
+  font-size: 11px;
+  color: #8a9db0;
+  line-height: 1.4;
+}
+
+.edu-action-hint--lock {
+  color: #c47a5a;
+}
+
+/* Prerequisite list items */
+.edu-prereq--met {
+  color: #78c254;
+}
+
+.edu-prereq--unmet {
+  color: #e07878;
+}

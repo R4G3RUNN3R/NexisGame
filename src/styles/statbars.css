@@ -1,0 +1,91 @@
+/* ─────────────────────────────────────────────────────────────────────────────
+   Nexis — Stat Bars
+   Compact sidebar layout:
+     [Label:]  [000/000]   [countdown]
+               [========]
+   ───────────────────────────────────────────────────────────────────────────── */
+
+.statbars {
+  padding: 6px 0 10px;
+  border-top: 1px solid #1e2a34;
+  border-bottom: 1px solid #1e2a34;
+  margin-bottom: 8px;
+}
+
+/* ─── Row ──────────────────────────────────────────────────────────────────── */
+
+.sb-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0;
+  padding: 4px 10px 2px;
+  min-height: 32px;
+}
+
+.sb-row__label {
+  width: 56px;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding-top: 2px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.sb-row__middle {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 6px;
+}
+
+.sb-row__nums {
+  font-size: 11px;
+  color: #d0dce8;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.sb-over {
+  font-size: 10px;
+  color: #ff9800;
+  font-weight: 700;
+  margin-left: 4px;
+}
+
+/* ─── Bar track ────────────────────────────────────────────────────────────── */
+
+.sb-track {
+  height: 8px;
+  background: #0b1318;
+  border: 1px solid #1c2832;
+  border-radius: 1px;
+  overflow: hidden;
+  position: relative;
+}
+
+.sb-fill {
+  height: 100%;
+  border-radius: 1px;
+  transition: width 1s linear;
+}
+
+/* ─── Countdown ────────────────────────────────────────────────────────────── */
+
+.sb-row__cd {
+  width: 40px;
+  flex-shrink: 0;
+  text-align: right;
+  font-size: 11px;
+  font-weight: 600;
+  color: #8ba0b0;
+  padding-top: 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sb-row__cd--full {
+  color: #4caf50;
+  font-weight: 700;
+}
