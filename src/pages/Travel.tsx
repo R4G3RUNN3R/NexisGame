@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AppShell } from "../components/layout/AppShell";
 import {
   worldCities,
@@ -8,16 +8,25 @@ import {
   worldMapTitle,
 } from "../data/worldMapData";
 import { askCiel } from "../lib/ciel-system";
+import { useEducationRuntime } from "../state/EducationRuntimeContext";
+import { useTravelRuntime } from "../state/TravelRuntimeContext";
 import mapImage from "../assets/maps/nexis-world-map.png";
 import "../styles/world-map-ui.css";
 
-// City art — keyed by worldMapData city id
 const CITY_IMAGES: Record<string, string> = {
-  nexis:  "/images/cities/city_nexis.png",
-  north:  "/images/cities/city_aethermoor.png",   // Silverbough Arcane Enclave
-  east:   "/images/cities/city_torvhal.png",      // Akai Tetsu War Dojo
-  west:   "/images/cities/city_westmarch.png",    // Blackharbor Shadow Port
-  south:  "/images/cities/city_embervale.png",    // Spiritwood Sacred Isle
+  nexis: "/images/cities/city_nexis.png",
+  north: "/images/cities/city_aethermoor.png",
+  east: "/images/cities/city_torvhal.png",
+  west: "/images/cities/city_westmarch.png",
+  south: "/images/cities/city_embervale.png",
+};
+
+const BASE_TRAVEL_CONFIG: Record<WorldCityId, { durationMs: number; riskChance: number }> = {
+  nexis: { durationMs: 0, riskChance: 0 },
+  north: { durationMs: 30000, riskChance: 0.25 },
+  east: { durationMs: 34000, riskChance: 0.25 },
+  west: { durationMs: 38000, riskChance: 0.35 },
+  south: { durationMs: 42000, riskChance: 0.4 },
 };
 
 function getPinClass(region: WorldCity["region"]) {
@@ -35,47 +44,91 @@ function getPinClass(region: WorldCity["region"]) {
   }
 }
 
+function formatTravelRemaining(ms: number): string {
+  if (ms <= 0) return "Ready to finalize";
+  const totalSeconds = Math.ceil(ms / 1000);
+  const minutes = Math.floor(totalSeconds / 60);
+  const seconds = totalSeconds % 60;
+  return `${minutes}m ${seconds}s remaining`;
+}
+
 export default function TravelPage() {
-  const [selectedCityId, setSelectedCityId] = useState<WorldCityId>("nexis");
+  const { educationState, hasUnlockedSystem } = useEducationRuntime();
+  const travel = useTravelRuntime();
+  const [selectedCityId, setSelectedCityId] = useState<WorldCityId>(travel.travelState.currentCityId as WorldCityId);
+  const [remainingMs, setRemainingMs] = useState(() => travel.getRemainingMs());
 
   const selectedCity = useMemo(
     () => worldCities.find((city) => city.id === selectedCityId) ?? worldCities[0],
-    [selectedCityId]
+    [selectedCityId],
+  );
+
+  const currentCity = useMemo(
+    () => worldCities.find((city) => city.id === travel.travelState.currentCityId) ?? worldCities[0],
+    [travel.travelState.currentCityId],
   );
 
   const selectedRoutes = useMemo(
-    () =>
-      worldRoutes.filter(
-        (route) => route.from === selectedCity.id || route.to === selectedCity.id
-      ),
-    [selectedCity]
+    () => worldRoutes.filter((route) => route.from === selectedCity.id || route.to === selectedCity.id),
+    [selectedCity],
   );
+
+  useEffect(() => {
+    if (!travel.isTravelling) {
+      setRemainingMs(0);
+      return;
+    }
+    const id = window.setInterval(() => {
+      const next = travel.getRemainingMs();
+      setRemainingMs(next);
+    }, 1000);
+    return () => window.clearInterval(id);
+  }, [travel, travel.isTravelling]);
+
+  const hasGeography = hasUnlockedSystem("safe_travel");
+  const hasTravelDiscovery = hasUnlockedSystem("travel_discovery");
+  const selectedBase = BASE_TRAVEL_CONFIG[selectedCity.id];
+  const adjustedDurationMs = selectedBase.durationMs === 0
+    ? 0
+    : Math.round(selectedBase.durationMs * (hasGeography ? 0.95 : 1.5));
+  const adjustedRiskChance = hasGeography ? Math.max(0, selectedBase.riskChance - 0.25) : selectedBase.riskChance;
+
+  function handleTravelStart() {
+    if (selectedCity.id === travel.travelState.currentCityId) return;
+    travel.startTravel(selectedCity.id, adjustedDurationMs, {
+      riskChance: adjustedRiskChance,
+      failureMessage: hasGeography
+        ? `Your route to ${selectedCity.name} was disrupted and you were forced back to ${currentCity.name}.`
+        : `Without World Geography, you lost your way trying to reach ${selectedCity.name} and ended up back in ${currentCity.name}.`,
+      successMessage: hasTravelDiscovery
+        ? `You safely reached ${selectedCity.name}. Your trained eye also picked up signs of possible discoveries along the route.`
+        : `You safely reached ${selectedCity.name}.`,
+    });
+  }
+
+  function handleFinalizeTravel() {
+    travel.finalizeTravel();
+    setRemainingMs(0);
+  }
 
   return (
     <AppShell
       title="Travel"
-      hint="Large world map, clear destination card, minimal clutter. CIEL handles the deeper explanation."
+      hint="Standalone travel with route time, risk, and geography-dependent reliability."
     >
       <div className="travel-layout">
         <section className="travel-panel travel-panel--map">
           <div className="travel-panel__header">{worldMapTitle}</div>
 
           <div className="travel-map-frame">
-            <img
-              src={mapImage}
-              alt="The locked world map of Nexis"
-              className="travel-map-image"
-            />
+            <img src={mapImage} alt="The locked world map of Nexis" className="travel-map-image" />
 
             {worldCities.map((city) => (
               <button
                 key={city.id}
                 type="button"
                 className={getPinClass(city.region)}
-                style={{
-                  left: `${city.xPercent}%`,
-                  top: `${city.yPercent}%`,
-                }}
+                style={{ left: `${city.xPercent}%`, top: `${city.yPercent}%` }}
                 onClick={() => {
                   setSelectedCityId(city.id);
                   askCiel("travel_destination", city);
@@ -96,11 +149,7 @@ export default function TravelPage() {
           <div className="travel-card">
             {CITY_IMAGES[selectedCity.id] && (
               <div className="travel-city-art">
-                <img
-                  src={CITY_IMAGES[selectedCity.id]}
-                  alt={selectedCity.name}
-                  className="travel-city-art__img"
-                />
+                <img src={CITY_IMAGES[selectedCity.id]} alt={selectedCity.name} className="travel-city-art__img" />
               </div>
             )}
             <div className="travel-card__title">{selectedCity.name}</div>
@@ -108,20 +157,28 @@ export default function TravelPage() {
 
             <div className="travel-card__grid">
               <div className="travel-info">
-                <span className="travel-info__label">Region</span>
-                <strong className="travel-info__value">{selectedCity.region}</strong>
+                <span className="travel-info__label">Current City</span>
+                <strong className="travel-info__value">{currentCity.name}</strong>
               </div>
               <div className="travel-info">
                 <span className="travel-info__label">Access Rule</span>
                 <strong className="travel-info__value">{selectedCity.accessRule}</strong>
               </div>
               <div className="travel-info">
-                <span className="travel-info__label">Academy</span>
-                <strong className="travel-info__value">{selectedCity.academy ?? "None"}</strong>
+                <span className="travel-info__label">Travel Time</span>
+                <strong className="travel-info__value">{selectedCity.id === travel.travelState.currentCityId ? "Already here" : formatTravelRemaining(adjustedDurationMs)}</strong>
               </div>
               <div className="travel-info">
-                <span className="travel-info__label">Travel Feel</span>
-                <strong className="travel-info__value">{selectedCity.travelFeel}</strong>
+                <span className="travel-info__label">Travel Risk</span>
+                <strong className="travel-info__value">{selectedCity.id === travel.travelState.currentCityId ? "None" : `${Math.round(adjustedRiskChance * 100)}%`}</strong>
+              </div>
+              <div className="travel-info">
+                <span className="travel-info__label">World Geography</span>
+                <strong className="travel-info__value">{hasGeography ? "Learned" : "Missing"}</strong>
+              </div>
+              <div className="travel-info">
+                <span className="travel-info__label">Travel Discovery</span>
+                <strong className="travel-info__value">{hasTravelDiscovery ? "Unlocked" : "Locked"}</strong>
               </div>
             </div>
 
@@ -138,6 +195,42 @@ export default function TravelPage() {
               </ul>
             </div>
 
+            <div className="travel-subsection">
+              <div className="travel-subsection__title">Route Advisory</div>
+              <ul className="travel-list">
+                {hasGeography ? (
+                  <>
+                    <li>World Geography reduces travel time and sharply lowers the chance of getting lost.</li>
+                    <li>Travel Discovery is unlocked, so successful journeys can later support finds and route events.</li>
+                  </>
+                ) : (
+                  <>
+                    <li>Without World Geography, long-distance travel is slower and carries a much higher chance of failure.</li>
+                    <li>You can still attempt the route, but you may lose time and return to your origin with nothing accomplished.</li>
+                  </>
+                )}
+              </ul>
+            </div>
+
+            {travel.travelState.status === "travelling" && (
+              <div className="travel-subsection">
+                <div className="travel-subsection__title">Current Journey</div>
+                <ul className="travel-list">
+                  <li>Destination: {worldCities.find((city) => city.id === travel.travelState.destinationCityId)?.name ?? "Unknown"}</li>
+                  <li>Status: {formatTravelRemaining(remainingMs)}</li>
+                </ul>
+              </div>
+            )}
+
+            {(travel.travelState.status === "arrived" || travel.travelState.status === "failed") && travel.travelState.lastOutcome && (
+              <div className="travel-subsection">
+                <div className="travel-subsection__title">Last Outcome</div>
+                <ul className="travel-list">
+                  <li>{travel.travelState.lastOutcome}</li>
+                </ul>
+              </div>
+            )}
+
             <div className="travel-actions">
               <button
                 type="button"
@@ -146,12 +239,39 @@ export default function TravelPage() {
               >
                 Ask CIEL
               </button>
-              <button
-                type="button"
-                className="travel-action-button travel-action-button--primary"
-              >
-                Travel
-              </button>
+
+              {travel.travelState.status === "travelling" && remainingMs <= 0 ? (
+                <button
+                  type="button"
+                  className="travel-action-button travel-action-button--primary"
+                  onClick={handleFinalizeTravel}
+                >
+                  Finalize Journey
+                </button>
+              ) : travel.travelState.status === "travelling" ? (
+                <button type="button" className="travel-action-button travel-action-button--primary" disabled>
+                  Travelling…
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="travel-action-button travel-action-button--primary"
+                  onClick={handleTravelStart}
+                  disabled={selectedCity.id === travel.travelState.currentCityId}
+                >
+                  Travel
+                </button>
+              )}
+
+              {(travel.travelState.status === "arrived" || travel.travelState.status === "failed") && (
+                <button
+                  type="button"
+                  className="travel-action-button"
+                  onClick={() => travel.resetOutcome()}
+                >
+                  Clear Outcome
+                </button>
+              )}
             </div>
           </div>
         </section>
