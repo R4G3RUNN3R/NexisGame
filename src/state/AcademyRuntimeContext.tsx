@@ -102,13 +102,26 @@ export function AcademyRuntimeProvider({ children }: { children: React.ReactNode
       }));
     },
     setAcademyRank(academyId, rank) {
-      setAcademyState((prev) => ({
-        ...prev,
-        rankProgress: {
-          ...prev.rankProgress,
-          [academyId]: Math.max(prev.rankProgress[academyId] ?? 0, rank),
-        },
-      }));
+      setAcademyState((prev) => {
+        const nextRank = Math.max(prev.rankProgress[academyId] ?? 0, rank);
+        const shouldUnlockBlackMarket =
+          academyId === "western" &&
+          prev.westernBranch === "shadow" &&
+          nextRank >= 5;
+
+        return {
+          ...prev,
+          rankProgress: {
+            ...prev.rankProgress,
+            [academyId]: nextRank,
+          },
+          passiveUnlocks: {
+            ...prev.passiveUnlocks,
+            blackMarketAccess:
+              prev.passiveUnlocks.blackMarketAccess || shouldUnlockBlackMarket,
+          },
+        };
+      });
     },
     unlockPassive(passive) {
       setAcademyState((prev) => ({
