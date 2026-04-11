@@ -10,6 +10,7 @@ import {
 import { askCiel } from "../lib/ciel-system";
 import { useEducationRuntime } from "../state/EducationRuntimeContext";
 import { useTravelRuntime } from "../state/TravelRuntimeContext";
+import { usePlayer } from "../state/PlayerContext";
 import mapImage from "../assets/maps/nexis-world-map.png";
 import "../styles/world-map-ui.css";
 
@@ -52,11 +53,51 @@ function formatTravelRemaining(ms: number): string {
   return `${minutes}m ${seconds}s remaining`;
 }
 
+function rollTravelDiscovery(options: { hasHistory: boolean; hasLore: boolean }) {
+  const roll = Math.random();
+
+  if (roll < 0.55) {
+    const gold = 120 + Math.floor(Math.random() * 181);
+    return {
+      summary: `You found a loose cache worth ${gold} gold along the route.`,
+      gold,
+      itemId: null as string | null,
+      itemQty: 0,
+    };
+  }
+
+  if (roll < 0.87) {
+    const materialPool = ["wild_herb", "iron_ore", "hardwood", "scrap_metal", "stone_block"] as const;
+    const itemId = materialPool[Math.floor(Math.random() * materialPool.length)];
+    const itemQty = 1 + Math.floor(Math.random() * 2);
+    return {
+      summary: `You discovered useful salvage on the roadside and recovered ${itemQty}x ${itemId.replaceAll("_", " ")}.`,
+      gold: 0,
+      itemId,
+      itemQty,
+    };
+  }
+
+  const rarePool = options.hasHistory || options.hasLore
+    ? (["ancient_fragment", "rare_gemstone", "mana_crystal", "runed_stone"] as const)
+    : (["ancient_fragment", "rare_gemstone"] as const);
+  const itemId = rarePool[Math.floor(Math.random() * rarePool.length)];
+  const itemQty = 1;
+  return {
+    summary: `You uncovered traces of a forgotten ruin and recovered ${itemId.replaceAll("_", " ")}.`,
+    gold: 0,
+    itemId,
+    itemQty,
+  };
+}
+
 export default function TravelPage() {
-  const { educationState, hasUnlockedSystem } = useEducationRuntime();
+  const education = useEducationRuntime();
   const travel = useTravelRuntime();
+  const { addGold, addItem } = usePlayer();
   const [selectedCityId, setSelectedCityId] = useState<WorldCityId>(travel.travelState.currentCityId as WorldCityId);
   const [remainingMs, setRemainingMs] = useState(() => travel.getRemainingMs());
+  const [discoveryMessage, setDiscoveryMessage] = useState<string | null>(null);
 
   const selectedCity = useMemo(
     () => worldCities.find((city) => city.id === selectedCityId) ?? worldCities[0],
@@ -85,13 +126,19 @@ export default function TravelPage() {
     return () => window.clearInterval(id);
   }, [travel, travel.isTravelling]);
 
-  const hasGeography = hasUnlockedSystem("safe_travel");
-  const hasTravelDiscovery = hasUnlockedSystem("travel_discovery");
+  const hasGeography = education.hasUnlockedSystem("safe_travel");
+  const hasTravelDiscovery = education.hasUnlockedSystem("travel_discovery");
+  const hasHistory = education.hasUnlockedSystem("relic_missions");
+  const hasLore = education.hasUnlockedSystem("lore_dialogue");
+
   const selectedBase = BASE_TRAVEL_CONFIG[selectedCity.id];
-  const adjustedDurationMs = selectedBase.durationMs === 0
-    ? 0
-    : Math.round(selectedBase.durationMs * (hasGeography ? 0.95 : 1.5));
-  const adjustedRiskChance = hasGeography ? Math.max(0, selectedBase.riskChance - 0.25) : selectedBase.riskChance;
+  const adjustedDurationMs =
+    selectedBase.durationMs === 0
+      ? 0
+      : Math.round(selectedBase.durationMs * (hasGeography ? 0.95 : 1.5));
+  const adjustedRiskChance = hasGeography
+    ? Math.max(0, selectedBase.riskChance - 0.25)
+    : selectedBase.riskChance;
 
   function handleTravelStart() {
     if (selectedCity.id === travel.travelState.currentCityId) return;
@@ -104,11 +151,22 @@ export default function TravelPage() {
         ? `You safely reached ${selectedCity.name}. Your trained eye also picked up signs of possible discoveries along the route.`
         : `You safely reached ${selectedCity.name}.`,
     });
+    setDiscoveryMessage(null);
   }
 
   function handleFinalizeTravel() {
-    travel.finalizeTravel();
+    const result = travel.finalizeTravel();
+    if (!result) return;
     setRemainingMs(0);
+
+    if (result.status === "arrived" && hasTravelDiscovery) {
+      const discovery = rollTravelDiscovery({ hasHistory, hasLore });
+      if (discovery.gold > 0) addGold(discovery.gold);
+      if (discovery.itemId && discovery.itemQty > 0) addItem(discovery.itemId, discovery.itemQty);
+      setDiscoveryMessage(discovery.summary);
+    } else {
+      setDiscoveryMessage(null);
+    }
   }
 
   return (
@@ -201,7 +259,7 @@ export default function TravelPage() {
                 {hasGeography ? (
                   <>
                     <li>World Geography reduces travel time and sharply lowers the chance of getting lost.</li>
-                    <li>Travel Discovery is unlocked, so successful journeys can later support finds and route events.</li>
+                    <li>Travel Discovery is unlocked, so successful journeys can yield gold, salvage, or rare finds.</li>
                   </>
                 ) : (
                   <>
@@ -209,6 +267,7 @@ export default function TravelPage() {
                     <li>You can still attempt the route, but you may lose time and return to your origin with nothing accomplished.</li>
                   </>
                 )}
+                {hasHistory && <li>Historical Awareness improves the quality of rare discoveries and ruin-related finds.</li>}
               </ul>
             </div>
 
@@ -227,6 +286,7 @@ export default function TravelPage() {
                 <div className="travel-subsection__title">Last Outcome</div>
                 <ul className="travel-list">
                   <li>{travel.travelState.lastOutcome}</li>
+                  {discoveryMessage && <li>{discoveryMessage}</li>}
                 </ul>
               </div>
             )}
@@ -267,7 +327,10 @@ export default function TravelPage() {
                 <button
                   type="button"
                   className="travel-action-button"
-                  onClick={() => travel.resetOutcome()}
+                  onClick={() => {
+                    travel.resetOutcome();
+                    setDiscoveryMessage(null);
+                  }}
                 >
                   Clear Outcome
                 </button>
