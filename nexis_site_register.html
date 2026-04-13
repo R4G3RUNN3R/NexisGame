@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexis | Create Account</title>
+    <meta
+      name="description"
+      content="Create your Nexis account and enter a multiplayer world shaped by trade, travel, guilds, mastery, rivalry, and shadow routes."
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body class="site-body" data-page="register">
+    <div class="site-noise"></div>
+    <div class="portal-layout">
+      <section class="portal-stage portal-stage--register">
+        <div class="portal-stage__header">
+          <a class="brand brand--stacked" href="/">
+            <span class="brand__crest" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img">
+                <path d="M32 4 39.5 18.5 56 26 43 38 45.8 56 32 48.5 18.2 56 21 38 8 26 24.5 18.5Z" />
+                <circle cx="32" cy="32" r="8" />
+              </svg>
+            </span>
+            <span class="brand__body">
+              <span class="brand__eyebrow">Public Portal</span>
+              <span class="brand__mark">NEXIS</span>
+              <span class="brand__sub">Account Portal</span>
+            </span>
+            <span class="brand__flare" aria-hidden="true"></span>
+          </a>
+          <p class="eyebrow">New Arrival</p>
+          <h1>Step into a world that gives you more than one future.</h1>
+          <p class="portal-stage__lede">
+            Trade, travel, study, build, compete, cooperate, or step into the shadows
+            when the reward justifies the risk. Nexis is designed as a broad world,
+            not a single-track fantasy.
+          </p>
+        </div>
+
+        <div class="portal-ribbons">
+          <div class="ribbon ribbon--gold">Markets and movement</div>
+          <div class="ribbon ribbon--blue">Guild pressure and reputation</div>
+          <div class="ribbon ribbon--steel">Mastery, rivalry, and long-form growth</div>
+        </div>
+
+        <div class="portal-cards">
+          <article class="mini-card">
+            <span>Economy</span>
+            <strong>Sell well. Buy smart. Control timing.</strong>
+          </article>
+          <article class="mini-card">
+            <span>Travel</span>
+            <strong>Reach places other players ignore.</strong>
+          </article>
+          <article class="mini-card">
+            <span>Guilds</span>
+            <strong>Build social power that outlives one decision.</strong>
+          </article>
+        </div>
+
+        <figure class="portal-stage__image">
+          <picture>
+            <source srcset="/assets/city-nexis.webp" type="image/webp" />
+            <img
+              src="/assets/city-nexis.png"
+              alt="The walled capital city of Nexis"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      </section>
+
+      <main class="portal-panel">
+        <div class="portal-panel__inner frame">
+          <a class="back-link" href="/">Back to welcome</a>
+          <p class="eyebrow">Create Account</p>
+          <h2 class="portal-panel__title">Open your Nexis account.</h2>
+          <p class="portal-panel__subtitle">
+            Create your account, receive a permanent public citizen ID, and enter the shard immediately.
+          </p>
+
+          <div class="panel-note panel-note--character">
+            These become your citizen's visible names inside Nexis.
+          </div>
+
+          <div id="form-status" class="form-status" hidden></div>
+
+          <form id="register-form" class="account-form" novalidate>
+            <div class="account-row">
+              <div class="field">
+                <label for="first-name">Character Name</label>
+                <input
+                  id="first-name"
+                  name="firstName"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Your character's first name"
+                />
+                <p class="field-error" data-error-for="firstName"></p>
+              </div>
+              <div class="field">
+                <label for="last-name">Family Name</label>
+                <input
+                  id="last-name"
+                  name="lastName"
+                  type="text"
+                  autocomplete="off"
+                  placeholder="Your character's family name"
+                />
+                <p class="field-error" data-error-for="lastName"></p>
+              </div>
+            </div>
+
+            <div class="field">
+              <label for="reg-email">Email</label>
+              <input id="reg-email" name="email" type="email" autocomplete="email" />
+              <p class="field-error" data-error-for="email"></p>
+            </div>
+
+            <div class="field">
+              <label for="reg-password">Password</label>
+              <input id="reg-password" name="password" type="password" autocomplete="new-password" />
+              <p class="field-error" data-error-for="password"></p>
+            </div>
+
+            <div class="field">
+              <label for="reg-confirm-password">Confirm Password</label>
+              <input id="reg-confirm-password" name="confirmPassword" type="password" autocomplete="new-password" />
+              <p class="field-error" data-error-for="confirmPassword"></p>
+            </div>
+
+            <div class="panel-note">
+              Your account is created now. Final progression still happens inside the game world.
+            </div>
+
+            <button class="button button--primary button--full" type="submit">
+              Create Account
+            </button>
+          </form>
+
+          <p class="account-switch">
+            Already have an account?
+            <a href="/login">Log in here</a>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <script src="/assets/site.js"></script>
+  </body>
+</html>

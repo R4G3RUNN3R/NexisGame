@@ -13,5 +13,13 @@
     "jsx": "react-jsx",
     "strict": true
   },
-  "include": ["src"]
+  "include": ["src"],
+  "exclude": [
+    "src/components/Ciel*.tsx",
+    "src/pages/city/**",
+    "src/pages/Properties.tsx",
+    "src/pages/PropertyDetail.tsx",
+    "src/state/AcademyContext.tsx",
+    "src/pages/ArenaRuntime.tsx"
+  ]
 }

@@ -1,0 +1,6 @@
+﻿.deploy/
+*.tgz
+node_modules/
+dist/
+.env
+.env.*

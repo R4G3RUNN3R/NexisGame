@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { usePlayer } from "../../state/PlayerContext";
 import { useAuth } from "../../state/AuthContext";
+import { formatPlayerNameWithPublicId, getProfileRoute } from "../../lib/publicIds";
 
 const navLinks: Array<[string, string]> = [
   ["Wiki", "#"],
@@ -27,7 +28,7 @@ export function TopBar() {
   const [clockOpen, setClockOpen] = useState(false);
   const [now, setNow] = useState(() => new Date());
 
-  const { player, resetPlayer } = usePlayer();
+  const { player } = usePlayer();
   const { logout, isLoggedIn } = useAuth();
   const navigate = useNavigate();
 
@@ -60,14 +61,15 @@ export function TopBar() {
   const displayName = player.lastName
     ? `${player.name} ${player.lastName}`
     : player.name || "Unknown";
+  const displayNameWithPublicId = formatPlayerNameWithPublicId(displayName, player.publicId);
+  const profileRoute = getProfileRoute(player.publicId);
 
   const initial = player.name ? player.name.charAt(0).toUpperCase() : "?";
 
   function handleLogout() {
     setPlayerOpen(false);
     logout();
-    resetPlayer();
-    navigate("/register", { replace: true });
+    navigate("/login", { replace: true });
   }
 
   return (
@@ -125,14 +127,14 @@ export function TopBar() {
             onClick={() => setPlayerOpen((value) => !value)}
           >
             <span className="player-menu__avatar">{initial}</span>
-            <span className="player-menu__name">{player.name || "Player"}</span>
+            <span className="player-menu__name">{displayNameWithPublicId}</span>
             <span className="player-menu__caret">{playerOpen ? "▲" : "▼"}</span>
           </button>
 
           {playerOpen ? (
             <div className="player-menu__dropdown">
               <div className="player-menu__server">Shard: Cay</div>
-              <NavLink to="/profile" className="player-menu__item" onClick={() => setPlayerOpen(false)}>
+              <NavLink to={profileRoute} className="player-menu__item" onClick={() => setPlayerOpen(false)}>
                 Character Profile
               </NavLink>
               <NavLink to="/achievements" className="player-menu__item" onClick={() => setPlayerOpen(false)}>

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { AppShell } from "../components/layout/AppShell";
 import { ContentPanel } from "../components/layout/ContentPanel";
 import { usePlayer } from "../state/PlayerContext";
+import { formatPlayerNameWithPublicId } from "../lib/publicIds";
 
 function Row({ label, value }: { label: string; value: React.ReactNode }) {
   return (
@@ -28,6 +29,10 @@ function QuickLinkRow({ label, to }: { label: string; to: string }) {
 export default function HomePage() {
   const { player, isHospitalized, hospitalRemainingLabel } = usePlayer();
   const currentEducation = player.current.education;
+  const displayName = player.lastName
+    ? `${player.name} ${player.lastName}`
+    : player.name || "Unknown";
+  const displayNameWithPublicId = formatPlayerNameWithPublicId(displayName, player.publicId);
 
   return (
     <AppShell
@@ -38,7 +43,7 @@ export default function HomePage() {
         <div className="nexis-column">
           <ContentPanel title="General Information">
             <div className="info-list">
-              <Row label="Name" value={`${player.name} [#${player.id}]`} />
+              <Row label="Name" value={displayNameWithPublicId} />
               <Row label="Level" value={player.level} />
               <Row label="Rank" value={player.rank} />
               <Row label="Age" value={`${player.daysPlayed} days`} />

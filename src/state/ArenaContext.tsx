@@ -14,6 +14,7 @@ import React, {
 } from "react";
 import { arenaTiers, getActiveTierIndex, type BattleStat } from "../data/arenaData";
 import { usePlayer } from "./PlayerContext";
+import { useAuth } from "./AuthContext";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -62,10 +63,15 @@ const ArenaContext = createContext<ArenaContextValue | null>(null);
 export function ArenaProvider({ children }: PropsWithChildren) {
   const [state, setState] = useState<ArenaStorageState>(readStorage);
   const { player, spendEnergy, addBattleStat, isHospitalized, isJailed } = usePlayer();
+  const { serverHydrationVersion } = useAuth();
 
   useEffect(() => {
     writeStorage(state);
   }, [state]);
+
+  useEffect(() => {
+    setState(readStorage());
+  }, [serverHydrationVersion]);
 
   // ── isTierUnlocked ────────────────────────────────────────────────────────
   const isTierUnlocked = useCallback((tierId: string): boolean => {

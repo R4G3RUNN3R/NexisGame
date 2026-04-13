@@ -4,6 +4,7 @@ import { TopBar } from "./TopBar";
 import { usePlayer } from "../../state/PlayerContext";
 import { useAuth } from "../../state/AuthContext";
 import { StatBars } from "./StatBars";
+import { formatPlayerNameWithPublicId, formatPlayerPublicId } from "../../lib/publicIds";
 
 type AppShellProps = {
   title?: string;
@@ -12,7 +13,7 @@ type AppShellProps = {
 };
 
 const core: Array<[string, string]> = [
-  ["Home",      "/"],
+  ["Home",      "/home"],
   ["Inventory", "/inventory"],
   ["Education", "/education"],
   ["Jobs",      "/jobs"],
@@ -46,7 +47,7 @@ function SidebarSection({
           <NavLink
             key={to}
             to={to}
-            end={to === "/"}
+            end={to === "/home"}
             className={({ isActive }) =>
               `sidebar-link${isActive ? " sidebar-link--active" : ""}`
             }
@@ -72,15 +73,13 @@ export function AppShell({ title, hint, children }: AppShellProps) {
     hospitalRemainingLabel,
     isJailed,
     jailRemainingLabel,
-    resetPlayer,
   } = usePlayer();
   const { logout } = useAuth();
   const navigate = useNavigate();
 
   function handleLogout() {
     logout();
-    resetPlayer();
-    navigate("/register", { replace: true });
+    navigate("/login", { replace: true });
   }
 
   // Condition display
@@ -97,6 +96,7 @@ export function AppShell({ title, hint, children }: AppShellProps) {
   const displayName = player.lastName
     ? `${player.name} ${player.lastName}`
     : player.name || "Unknown";
+  const displayNameWithPublicId = formatPlayerNameWithPublicId(displayName, player.publicId);
 
   return (
     <div className="app-shell">
@@ -112,8 +112,8 @@ export function AppShell({ title, hint, children }: AppShellProps) {
           {/* ── Player Info Card ──────────────────────────────────── */}
           <div className="player-card">
             <div className="player-card__name">
-              <span className="player-card__username">{displayName}</span>
-              <span className="player-card__id"> [#{player.id}]</span>
+              <span className="player-card__username">{displayNameWithPublicId}</span>
+              <span className="player-card__id"> Citizen ID {formatPlayerPublicId(player.publicId)}</span>
             </div>
 
             <div className="player-card__rows">

@@ -1,6 +1,8 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import RouteGuard from "../components/routing/RouteGuard";
 import RegisterPage from "../pages/Register";
+import { usePlayer } from "../state/PlayerContext";
+import { getProfileRoute } from "../lib/publicIds";
 
 import HomePage from "../pages/Home";
 import EducationPage from "../pages/Education";
@@ -23,21 +25,32 @@ import CityPage from "../pages/City";
 import InventoryPage from "../pages/Inventory";
 import ArenaPage from "../pages/Arena";
 
+function OwnProfileRedirect() {
+  const { player } = usePlayer();
+  return <Navigate to={getProfileRoute(player.publicId)} replace />;
+}
+
 export default function AppRouter() {
   return (
     <Routes>
-      <Route path="/register" element={<RegisterPage />} />
+      <Route path="/register" element={<RegisterPage initialMode="register" />} />
+      <Route path="/login" element={<RegisterPage initialMode="login" />} />
 
-      <Route path="/" element={<RouteGuard><HomePage /></RouteGuard>} />
-      <Route path="/inventory" element={<RouteGuard><InventoryPage /></RouteGuard>} />
-      <Route path="/profile" element={<RouteGuard><ProfilePage /></RouteGuard>} />
-      <Route path="/achievements" element={<RouteGuard><AchievementsPage /></RouteGuard>} />
-      <Route path="/housing" element={<RouteGuard><HousingPage /></RouteGuard>} />
-      <Route path="/guild" element={<RouteGuard><GuildPage /></RouteGuard>} />
-      <Route path="/hospital" element={<RouteGuard><HospitalPage /></RouteGuard>} />
-      <Route path="/city-board" element={<RouteGuard><CityBoardPage /></RouteGuard>} />
-      <Route path="/skills" element={<RouteGuard><SkillsPage /></RouteGuard>} />
-      <Route path="/tavern" element={<RouteGuard><TavernPage /></RouteGuard>} />
+      <Route path="/" element={<HomePage />} />
+      <Route path="/home" element={<HomePage />} />
+      <Route path="/inventory" element={<InventoryPage />} />
+      <Route path="/profile" element={<OwnProfileRedirect />} />
+      <Route path="/profile/:publicId" element={<ProfilePage />} />
+      <Route path="/profiles/:publicId" element={<ProfilePage />} />
+      <Route path="/profiles" element={<Navigate to="/profile" replace />} />
+      <Route path="/achievements" element={<AchievementsPage />} />
+      <Route path="/housing" element={<HousingPage />} />
+      <Route path="/guild" element={<GuildPage />} />
+      <Route path="/hospital" element={<HospitalPage />} />
+      <Route path="/city-board" element={<CityBoardPage />} />
+      <Route path="/skills" element={<SkillsPage />} />
+      <Route path="/tavern" element={<TavernPage />} />
+
       <Route path="/education" element={<RouteGuard><EducationPage /></RouteGuard>} />
       <Route path="/jobs" element={<RouteGuard><JobsPage /></RouteGuard>} />
       <Route path="/arena" element={<RouteGuard><ArenaPage /></RouteGuard>} />

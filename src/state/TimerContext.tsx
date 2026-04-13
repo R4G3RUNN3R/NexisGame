@@ -7,6 +7,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useAuth } from "./AuthContext";
 
 // ─── Resource Configs ────────────────────────────────────────────────────────
 
@@ -174,6 +175,7 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
     // Apply catch-up immediately on mount
     return applyCatchUpTicks(loaded, Date.now());
   });
+  const { serverHydrationVersion } = useAuth();
 
   // Keep a ref to latest state for use inside the interval without stale closure
   const stateRef = useRef(state);
@@ -185,6 +187,10 @@ export function TimerProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     saveState(state);
   }, [state]);
+
+  useEffect(() => {
+    setState(applyCatchUpTicks(loadState(), Date.now()));
+  }, [serverHydrationVersion]);
 
   // Single 1-second interval that checks each resource
   useEffect(() => {

@@ -4,9 +4,11 @@
 // ─────────────────────────────────────────────────────────────────────────────
 
 import { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { AppShell } from "../components/layout/AppShell";
 import { usePlayer } from "../state/PlayerContext";
 import { getPropertyById } from "../data/propertyData";
+import { formatPlayerNameWithPublicId, formatPlayerPublicId, getProfileRoute, parsePlayerPublicId } from "../lib/publicIds";
 import "../styles/character-profile.css";
 
 type PanelSectionProps = {
@@ -50,16 +52,39 @@ function formatGold(amount: number): string {
 
 export default function ProfilePage() {
   const { player } = usePlayer();
+  const { publicId: publicIdParam } = useParams();
 
   const displayName = player.lastName
     ? `${player.name} ${player.lastName}`
     : player.name || "Unknown";
+  const displayNameWithPublicId = formatPlayerNameWithPublicId(displayName, player.publicId);
+  const profileRoute = getProfileRoute(player.publicId);
+  const requestedPublicId = parsePlayerPublicId(publicIdParam);
+  const isCurrentCitizenRoute = publicIdParam === undefined || requestedPublicId === player.publicId;
 
   const property = getPropertyById(player.property.current);
   const propertyName = property?.name ?? "None";
 
   const inventoryCount = Object.values(player.inventory).reduce((a, b) => a + b, 0);
   const inventoryTypes = Object.keys(player.inventory).length;
+
+  if (!isCurrentCitizenRoute) {
+    return (
+      <AppShell title="Character Profile">
+        <div className="character-profile-page">
+          <section className="character-panel">
+            <div className="character-panel__body">
+              <h2 style={{ marginTop: 0 }}>Citizen Record Unavailable</h2>
+              <p>
+                Citizen {formatPlayerPublicId(requestedPublicId)} is not mirrored into this local Nexis shard yet.
+              </p>
+              <Link className="inline-route-link" to={profileRoute}>Open your own profile</Link>
+            </div>
+          </section>
+        </div>
+      </AppShell>
+    );
+  }
 
   return (
     <AppShell title="Character Profile">
@@ -68,9 +93,9 @@ export default function ProfilePage() {
           <div className="character-hero__identity">
             <div className="character-hero__status-dot" />
             <div>
-              <h1>{displayName}</h1>
+              <h1>{displayNameWithPublicId}</h1>
               <div className="character-hero__meta">
-                <span>#{player.id}</span>
+                <span>{formatPlayerPublicId(player.publicId)}</span>
                 <span>{player.title === "0" ? "The Absolute" : player.title}</span>
                 <span>Level {player.level}</span>
                 <span>{player.rank === "0" ? "Unranked" : player.rank}</span>
@@ -99,7 +124,8 @@ export default function ProfilePage() {
           <div className="character-column">
             <PanelSection title="User Information">
               <div className="stat-table">
-                <StatRow label="Name" value={displayName} />
+                <StatRow label="Name" value={displayNameWithPublicId} />
+                <StatRow label="Public ID" value={formatPlayerPublicId(player.publicId)} />
                 <StatRow label="Level" value={player.level} />
                 <StatRow label="Rank" value={player.rank === "0" ? "Unranked" : player.rank} />
                 <StatRow label="Title" value={player.title === "0" ? "The Absolute" : player.title} />

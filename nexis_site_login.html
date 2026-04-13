@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nexis | Log In</title>
+    <meta
+      name="description"
+      content="Return to Nexis and continue your rise through trade, travel, guilds, rivalry, and the rest of the realm."
+    />
+    <link rel="stylesheet" href="/assets/site.css" />
+  </head>
+  <body class="site-body" data-page="login">
+    <div class="site-noise"></div>
+    <div class="portal-layout">
+      <section class="portal-stage portal-stage--login">
+        <div class="portal-stage__header">
+          <a class="brand brand--stacked" href="/">
+            <span class="brand__crest" aria-hidden="true">
+              <svg viewBox="0 0 64 64" role="img">
+                <path d="M32 4 39.5 18.5 56 26 43 38 45.8 56 32 48.5 18.2 56 21 38 8 26 24.5 18.5Z" />
+                <circle cx="32" cy="32" r="8" />
+              </svg>
+            </span>
+            <span class="brand__body">
+              <span class="brand__eyebrow">Public Portal</span>
+              <span class="brand__mark">NEXIS</span>
+              <span class="brand__sub">Return to Your Shard</span>
+            </span>
+            <span class="brand__flare" aria-hidden="true"></span>
+          </a>
+          <p class="eyebrow">Existing Account</p>
+          <h1>Come back to the world you were shaping.</h1>
+          <p class="portal-stage__lede">
+            Markets keep moving. Rivalries keep breathing. Guilds keep watching.
+            Sign in and return directly to the shard you were building.
+          </p>
+        </div>
+
+        <div class="portal-cards portal-cards--stacked">
+          <article class="mini-card mini-card--wide">
+            <span>What waits for you</span>
+            <strong>Movement, economy, status, mastery, pressure, and choice.</strong>
+          </article>
+          <article class="mini-card mini-card--wide">
+            <span>Not just one lane</span>
+            <strong>Nexis works when every path can create power in a different way.</strong>
+          </article>
+        </div>
+
+        <figure class="portal-stage__image portal-stage__image--cool">
+          <picture>
+            <source srcset="/assets/city-aethermoor.webp" type="image/webp" />
+            <img
+              src="/assets/city-aethermoor.png"
+              alt="The frozen spires of Aethermoor"
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
+        </figure>
+      </section>
+
+      <main class="portal-panel">
+        <div class="portal-panel__inner frame">
+          <a class="back-link" href="/">Back to welcome</a>
+          <p class="eyebrow">Log In</p>
+          <h2 class="portal-panel__title">Re-enter the realm.</h2>
+          <p class="portal-panel__subtitle">
+            Use your Nexis account email and password to enter the realm.
+          </p>
+
+          <div id="form-status" class="form-status" hidden></div>
+
+          <form id="login-form" class="account-form" novalidate>
+            <div class="field">
+              <label for="login-email">Email</label>
+              <input id="login-email" name="email" type="email" autocomplete="email" />
+              <p class="field-error" data-error-for="email"></p>
+            </div>
+
+            <div class="field">
+              <label for="login-password">Password</label>
+              <input id="login-password" name="password" type="password" autocomplete="current-password" />
+              <p class="field-error" data-error-for="password"></p>
+            </div>
+
+            <button class="button button--secondary button--full" type="submit">
+              Enter Nexis
+            </button>
+          </form>
+
+          <p class="account-switch">
+            Need an account first?
+            <a href="/register">Create one here</a>
+          </p>
+        </div>
+      </main>
+    </div>
+
+    <script src="/assets/site.js"></script>
+  </body>
+</html>

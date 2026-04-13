@@ -13,6 +13,7 @@ import {
   type EducationCategory,
   type EducationCourse,
 } from "../data/educationData";
+import { useAuth } from "./AuthContext";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -170,11 +171,16 @@ const EducationContext = createContext<EducationContextValue | null>(null);
 
 export function EducationProvider({ children }: PropsWithChildren) {
   const [state, setState] = useState<EducationState>(readStoredState);
+  const { serverHydrationVersion } = useAuth();
 
   // Persist to localStorage whenever state changes
   useEffect(() => {
     writeStoredState(state);
   }, [state]);
+
+  useEffect(() => {
+    setState(readStoredState());
+  }, [serverHydrationVersion]);
 
   // ── checkCompletion ────────────────────────────────────────────────────────
   // Called every 1000ms. If the active course has passed its completesAt
